@@ -8,7 +8,6 @@ def Dashboard():
     st.write("Selamat datang di aplikasi klasifikasi varietas padi!")
 
 def Introduction():
-    st.markdown("# Introduction")
     st.title("Latar Belakang")
     st.write("""
              Beras merupakan komoditas pangan utama dan sumber karbohidrat penting bagi masyarakat Indonesia. 
@@ -18,9 +17,17 @@ def Introduction():
              Untuk mengatasinya, teknologi berbasis kecerdasan buatan (AI) dapat menjadi solusi yang menjanjikan. 
              Identifikasi otomatis dengan AI dapat meningkatkan akurasi, efisiensi, dan keandalan klasifikasi varietas beras, serta mendukung pengelolaan dan distribusi yang lebih baik.
     """)
+    st.header("Rumusan Masalah")
+    st.subheader("Permasalahan")
+    st.subheader("Solusi Permasalahan")
+    st.subheader("Pertanyaan Penelitian")
+
+    st.header("Tujuan dan Manfaat Penelitian")
+    st.subheader("Tujuan Penelitian")
+    st.subheader("Manfaat Penelitian")
 
 def Dataset_Information():
-    st.markdown("# Dataset Information")
+    st.markdown("# Informasi Dataset")
     st.write("""
         Dataset terdiri dari gambar biji padi yang telah dikategorikan berdasarkan varietasnya.
         Terdapat data latih, validasi, dan pengujian dalam format citra.
