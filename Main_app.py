@@ -58,7 +58,7 @@ def Introduction():
             
 
     st.header("Metodologi")
-    st.image("Images/arsitektursistem.png", caption="Arsitektur sistem"
+    st.image("Images/arsitektursistem.png", caption="Arsitektur sistem")
 
 def Dataset_Information():
     st.markdown("# Informasi Dataset")
