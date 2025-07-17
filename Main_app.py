@@ -72,6 +72,7 @@ def Prediction():
 
 with st.sidebar:
     selected = option_menu(
+        menu_title="Rice Variety Classification",
         options=[
             "Dashboard", 
             "Introduction", 
