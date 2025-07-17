@@ -9,9 +9,14 @@ def Dashboard():
 
 def Introduction():
     st.markdown("# Introduction")
+    st.title("Latar Belakang")
     st.write("""
-        Aplikasi ini dibuat menggunakan arsitektur Transfer Learning untuk mengklasifikasikan varietas padi.
-        Dataset telah diproses melalui tahapan preprocessing, training, evaluasi, dan prediksi.
+             Beras merupakan komoditas pangan utama dan sumber karbohidrat penting bagi masyarakat Indonesia. 
+             Konsumsinya terus meningkat dan mencapai 30,34 juta ton pada tahun 2024, menjadikannya sangat vital bagi ketahanan pangan nasional. 
+             Namun, terdapat tantangan seperti pemalsuan atau pencampuran varietas beras dapat mengganggu stabilitas pasar dan menurunkan kepercayaan konsumen.
+             Sementara itu, metode identifikasi manual berbasis visual sering kali memakan waktu, membutuhkan keahlian khusus, dan rawan kesalahan. 
+             Untuk mengatasinya, teknologi berbasis kecerdasan buatan (AI) dapat menjadi solusi yang menjanjikan. 
+             Identifikasi otomatis dengan AI dapat meningkatkan akurasi, efisiensi, dan keandalan klasifikasi varietas beras, serta mendukung pengelolaan dan distribusi yang lebih baik.
     """)
 
 def Dataset_Information():
@@ -83,7 +88,7 @@ with st.sidebar:
             "Prediction"
         ],
         icons=["house", "info-circle", "bar-chart", "tools", "cpu", "clipboard-check", "search"],
-        menu_icon="cast",
+        menu_icon="",
         default_index=0,
     )
 
