@@ -1,6 +1,7 @@
 import streamlit as st
+from streamlit_option_menu import option_menu
 
-# ====== Halaman Utama ======
+# ====== Halaman-Halaman ======
 
 def Dashboard():
     st.markdown("# Dashboard 🎈")
@@ -19,8 +20,6 @@ def Dataset_Information():
         Dataset terdiri dari gambar biji padi yang telah dikategorikan berdasarkan varietasnya.
         Terdapat data latih, validasi, dan pengujian dalam format citra.
     """)
-
-# ====== Halaman Tambahan ======
 
 def Preprocessing():
     st.markdown("# Preprocessing 🔧")
@@ -55,7 +54,7 @@ def Model_Evaluation():
         - Recall
         - F1-score
         - Confusion Matrix
-        
+
         Hasil evaluasi menunjukkan bahwa metode Transfer Learning menghasilkan akurasi lebih tinggi dibanding Non-Transfer Learning.
     """)
 
@@ -67,9 +66,28 @@ def Prediction():
     if uploaded_file is not None:
         st.image(uploaded_file, caption="Gambar yang diunggah", use_column_width=True)
         st.success("Model prediksi akan ditampilkan di sini (simulasi).")
-        st.write("Prediksi: **Varietas IR64**")  # Gantilah bagian ini jika ingin memuat model asli
+        st.write("Prediksi: **Varietas IR64**")  # Ganti bagian ini jika ada model asli
 
-# ====== Routing Halaman ======
+# ====== Menu Sidebar (Option Menu) ======
+
+with st.sidebar:
+    selected = option_menu(
+        menu_title="Navigasi Halaman",
+        options=[
+            "Dashboard", 
+            "Introduction", 
+            "Dataset Information", 
+            "Preprocessing", 
+            "Model Training", 
+            "Model Evaluation", 
+            "Prediction"
+        ],
+        icons=["house", "info-circle", "bar-chart", "tools", "cpu", "clipboard-check", "search"],
+        menu_icon="cast",
+        default_index=0,
+    )
+
+# ====== Pemanggilan Fungsi Halaman Berdasarkan Menu ======
 
 page_names_to_funcs = {
     "Dashboard": Dashboard,
@@ -81,10 +99,4 @@ page_names_to_funcs = {
     "Prediction": Prediction,
 }
 
-# ====== Sidebar Navigasi ======
-
-st.sidebar.title("Navigasi Halaman")
-selected_page = st.sidebar.selectbox("Pilih Halaman", page_names_to_funcs.keys())
-
-# ====== Tampilkan Halaman ======
-page_names_to_funcs[selected_page]()
+page_names_to_funcs[selected]()
