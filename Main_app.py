@@ -72,7 +72,6 @@ def Prediction():
 
 with st.sidebar:
     selected = option_menu(
-        menu_title="Navigasi Halaman",
         options=[
             "Dashboard", 
             "Introduction", 
