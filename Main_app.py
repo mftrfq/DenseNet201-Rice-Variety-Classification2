@@ -498,8 +498,7 @@ def Prediction():
                 st.error("Gagal memproses gambar.")
                 st.error(str(e))
 def About_us():
-    st.header("Penelitian")
-    st.subheader("Klasifikasi Varietas Beras Menggunakan Transfer Learning dengan Arsitektur DenseNet-201")
+    st.header("Klasifikasi Varietas Beras Menggunakan Transfer Learning dengan Arsitektur DenseNet-201")
     st.markdown("#### Peneliti:")
     st.markdown("""
                 1. Moch. Miftachur Rifqi Al Husain
@@ -522,7 +521,7 @@ with st.sidebar:
             "Prediction",
             "About Us"
         ],
-        icons=["info-circle", "bar-chart", "tools", "cpu", "clipboard-check", "search", "search"],
+        icons=["info-circle", "bar-chart", "tools", "cpu", "clipboard-check", "search", "fa-info"],
         default_index=0,
     )
 
