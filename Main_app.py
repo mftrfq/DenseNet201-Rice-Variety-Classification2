@@ -49,7 +49,7 @@ def import_and_predict(image_data, model):
 
 # ====== Halaman-Halaman ======
 def Introduction():
-    st.header("Latar Belakang")
+    st.header("Latar Belakang", divider = "gray")
     st.write("""
              Beras merupakan komoditas pangan utama dan sumber karbohidrat penting bagi masyarakat Indonesia. 
              Konsumsinya terus meningkat dan mencapai 30,34 juta ton pada tahun 2024, menjadikannya sangat vital bagi ketahanan pangan nasional. 
