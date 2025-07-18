@@ -91,10 +91,10 @@ def Preprocessing():
             5. Output Masking (RGBA) <br>
     """)
     st.subheading("Arsitektur U2-Net")
-    st.image("Images/u2netarch.jpg", caption="Arsitektur U2-Net")
-    st.image("Images/RSU.jpg", caption="Komponen Decoder-Encoder")
+    st.image("Images/u2netarch.png", caption="Arsitektur U2-Net")
+    st.image("Images/RSU.png", caption="Komponen Decoder-Encoder")
     st.markdown("## Hasil")
-    st.image("Images/bgremoved.jpg", caption="Background Removed")
+    st.image("Images/bgremoved.png", caption="Background Removed")
     
     st.subheading("2. Grayscale Conversion")
     st.write("""
