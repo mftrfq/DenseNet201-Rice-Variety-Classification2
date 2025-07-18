@@ -521,8 +521,7 @@ with st.sidebar:
             "Prediction",
             "About Us"
         ],
-        icons=["info-circle", "bar-chart", "tools", "cpu", "clipboard-check", "search", "balloon-heart"],
-        default_index=0,
+        icons=["info-circle", "bar-chart", "tools", "cpu", "clipboard-check", "search", "balloon-heart"], menu_icon="list", default_index=0,
     )
 
 # ====== Pemanggilan Fungsi Halaman Berdasarkan Menu ======
