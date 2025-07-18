@@ -61,7 +61,7 @@ def Introduction():
     st.markdown("---")
     
     st.header("Rumusan Masalah")
-    st.markdown("##### - Permasalahan")
+    st.markdown("#### -- Permasalahan")
     st.write("""
             Perbedaan karakteristik visual biji beras sering kali menjadi tantangan utama dalam mengklasifikasikan varietas beras secara akurat. 
             Variasi dalam bentuk, ukuran, tekstur, dan warna biji beras sering kali sangat kecil sehingga sulit dibedakan oleh metode konvensional berbasis pengamatan manual. 
