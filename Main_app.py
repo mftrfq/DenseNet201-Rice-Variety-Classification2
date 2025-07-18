@@ -49,6 +49,7 @@ def import_and_predict(image_data, model):
 
 # ====== Halaman-Halaman ======
 def Introduction():
+    st.title("KLASIFIKASI VARIETAS BERAS MENGGUNAKAN TRANSFER LEARNING DENGAN ARSITEKTUR DENSENET-201")
     st.header("Latar Belakang", divider = "gray")
     st.write("""
              Beras merupakan komoditas pangan utama dan sumber karbohidrat penting bagi masyarakat Indonesia. 
