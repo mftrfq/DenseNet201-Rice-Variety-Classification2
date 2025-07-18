@@ -172,4 +172,4 @@ page_names_to_funcs = {
     "Prediction": Prediction,
 }
 
-# page_names_to_funcs[selected]()
+page_names_to_funcs[selected]()
