@@ -88,15 +88,27 @@ def Preprocessing():
             5. Output Masking (RGBA) 
     """)
     st.subheader("Arsitektur U2-Net")
-    rembg1 = Image.open("Images/u2netarch.png").resize((600, 400))
-    rembg2 = Image.open("Images/RSU.png").resize((600, 400))
+    u2net1 = Image.open("Images/u2netarch.png").resize((600, 400))
+    u2net2 = Image.open("Images/RSU.png").resize((600, 400))
     col1, col2 = st.columns(2)
     with col1:
-        st.image(rembg1, caption="Arsitektur U2-Net", use_container_width=True)
+        st.image(u2net1, caption="Arsitektur U2-Net", use_container_width=True)
     with col2:
-        st.image(rembg2, caption="Komponen Decoder-Encoder", use_container_width=True)
-    st.image("Images/bgremoved.png", caption="Background Removed")
+        st.image(u2net2, caption="Komponen Decoder-Encoder", use_container_width=True)
+    # st.image("Images/bgremoved.png", caption="Background Removed")
     
+    rembg1 = Image.open("Images/ciherang_rembg.png").resize((400, 400))
+    rembg2 = Image.open("Images/ir64_rembg.png").resize((400, 400))
+    rembg2 = Image.open("Images/mentik_rembg.png").resize((400, 400))
+    
+    col1, col2, col3 = st.columns(3)
+    with col1:
+        st.image(rembg1, caption="Ciherang", use_container_width=True)
+    with col2:
+        st.image(rembg2, caption="IR64", use_container_width=True)
+     with col3:
+        st.image(rembg3, caption="Mentik Susu", use_container_width=True)
+        
     st.subheader("2. Grayscale Conversion")
     st.write("""
             Grayscale Conversion dilakukan dengan mengambil nilai intensitas warna dari setiap pixel dalam gambar RGB 
