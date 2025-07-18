@@ -318,7 +318,7 @@ def Prediction():
     if img_source == "Sample image":
         st.sidebar.header("Pilih kelas")
         selected_class = st.sidebar.selectbox("Varietas Padi", list(sample_images.keys()))
-        st.markdown(f"### {selected_class} Samples")
+        st.markdown(f"#### {selected_class} Samples")
         columns = st.columns(3)
         selected_image = None
         for i, image_path in enumerate(sample_images[selected_class]):
