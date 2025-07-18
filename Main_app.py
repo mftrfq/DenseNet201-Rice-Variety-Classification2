@@ -100,7 +100,6 @@ def Preprocessing():
         st.image(rembg1, caption="Arsitektur U2-Net", use_container_width=True)
     with col2:
         st.image(rembg2, caption="Komponen Decoder-Encoder", use_container_width=True)
-    st.markdown("### Hasil")
     st.image("Images/bgremoved.png", caption="Background Removed")
     
     st.subheader("2. Grayscale Conversion")
@@ -114,14 +113,22 @@ def Preprocessing():
     st.write("""
             Setelah nilai intensitas abu-abu dihitung, setiap pixel dalam gambar asli (yang berisi tiga nilai R, G, dan B) digantikan oleh satu nilai grey
     """)
-    st.image("Images/grayscale.png", caption= "Grayscale")
+    st.image("Images/grayscale.png", caption= "Grayscale Image")
     st.subheader("")
     st.write("""
     """)
     st.subheader("")
     st.write("""
     """)
-    
+    st.subheader("3. Image Cropping")
+    st.write("""
+            Proses cropping dilakukan dengan metode thresholding dan kontur. Pada tahap awal, gambar diubah menjadi binary mask menggunakan dengan nilai ambang 10
+            , di mana pixel  di atas 10 akan diubah menjadi 255 (putih), sedangkan nilai di bawah atau sama dengan 10 menjadi 0 (hitam) untuk memisahkan objek dari latar belakang. 
+            Selanjutnya, kontur yang terdeteksi dari binary mask digunakan untuk membuat bounding box. Bounding box ini kemudian diperbesar dengan padding 1.5 yang selanjutnya 
+            akan dilakukan array slicing berdasarkan koordinat yang didapat dari bounding box
+    """)
+    st.image("Images/cropped.png", caption = "Cropped Image")
+
 def Model_Training():
     st.markdown("# Model Training")
     st.write("""
