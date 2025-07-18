@@ -124,7 +124,7 @@ def Model_Training():
         - Batch size: 32
         - Epoch: 30
     """)
-    st.image("Images/densenet201arch.jpg", caption = "Arsitektur DenseNet-201")
+    st.image("Images/densenet201arch.png", caption = "Arsitektur DenseNet-201")
     data = {
         "Layers": [
             "Input",
