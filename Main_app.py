@@ -58,6 +58,8 @@ def Introduction():
              Untuk mengatasinya, teknologi berbasis kecerdasan buatan (AI) dapat menjadi solusi yang menjanjikan. 
              Identifikasi otomatis dengan AI dapat meningkatkan akurasi, efisiensi, dan keandalan klasifikasi varietas beras, serta mendukung pengelolaan dan distribusi yang lebih baik.
     """)
+    st.markdown("---")
+    
     st.header("Rumusan Masalah")
     st.subheader("Permasalahan")
     st.write("""
@@ -76,6 +78,7 @@ def Introduction():
     st.write("""
             Bagaimana tingkat Accuracy, Precision, Recall, dan F1-Score dari model DenseNet-201 berbasis Transfer Learning dibandingkan dengan Non-Transfer Learning dalam mengklasifikasikan varietas beras?
     """)
+    st.markdown("---")
 
     st.header("Tujuan dan Manfaat Penelitian") 
     st.subheader("Tujuan Penelitian")
@@ -88,6 +91,7 @@ def Introduction():
             dan menghasilkan sistem klasifikasi yang akurat untuk mengidentifikasi varietas beras yang dapat digunakan sebagai solusi inovatif untuk mengatasi keterbatasan metode manual 
             serta dapat digunakan sebagai bahan rujukan untuk penelitian terkait selanjutnya
     """)
+    st.markdown("---")
 
     st.header("Batasan Masalah")
     st.write("""
@@ -96,7 +100,8 @@ def Introduction():
             3.	Penelitian ini difokuskan pada klasifikasi varietas beras berdasarkan citra digital biji beras.
             4.	Algoritma yang digunakan dalam penelitian ini adalah pre-trained model DenseNet-201.
     """)
-            
+    st.markdown("---")
+       
     st.header("Metodologi")
     left_co, cent_co,last_co = st.columns(3)
     with cent_co:
@@ -155,7 +160,8 @@ def Preprocessing():
         st.image(rembg2, caption="IR64", use_container_width=True)
     with col3:
         st.image(rembg3, caption="Mentik Susu", use_container_width=True)
-        
+    st.markdown("---")
+
     st.subheader("2. Grayscale Conversion")
     st.write("""
             Grayscale Conversion dilakukan dengan mengambil nilai intensitas warna dari setiap pixel dalam gambar RGB 
@@ -179,6 +185,7 @@ def Preprocessing():
         st.image(gray2, caption="IR64", use_container_width=True)
     with col3:
         st.image(gray3, caption="Mentik Susu", use_container_width=True)
+    st.markdown("---")
 
     st.subheader("3. Image Cropping")
     st.write("""
