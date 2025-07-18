@@ -72,11 +72,11 @@ def Dataset_Information():
     st.markdown("## Sampel Data")
     col1, col2, col3 = st.columns(3)
     with col1:
-        st.image("Images/ciherang.jpg", caption="Varietas Ciherang", use_column_width=True)
+        st.image("Images/Ciherang.jpg", caption="Varietas Ciherang", use_column_width=True)
     with col2:
-        st.image("Images/ir64.jpg", caption="Varietas IR64", use_column_width=True)
+        st.image("Images/IR64.jpg", caption="Varietas IR64", use_column_width=True)
     with col3:
-        st.image("Images/mentik.jpg", caption="Varietas Mentik Susu", use_column_width=True)
+        st.image("Images/Mentik.jpg", caption="Varietas Mentik Susu", use_column_width=True)
 
 
 def Preprocessing():
