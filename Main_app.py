@@ -172,7 +172,7 @@ def Preprocessing():
              gray = 0.299R + 0.587G + 0.114B 
     """)
     st.write("""
-            Setelah nilai intensitas abu-abu dihitung, setiap pixel dalam gambar asli (yang berisi tiga nilai R, G, dan B) digantikan oleh satu nilai grey
+            Setelah nilai intensitas abu-abu dihitung, setiap pixel dalam gambar asli (yang berisi tiga nilai R, G, dan B) digantikan oleh satu nilai gray
     """)
     # st.image("Images/grayscale.png", caption= "Grayscale Image")
     gray1 = Image.open("Images/ciherang_gray.png").resize((400, 400))
