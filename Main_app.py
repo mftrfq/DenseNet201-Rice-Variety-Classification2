@@ -245,7 +245,6 @@ with st.sidebar:
 # ====== Pemanggilan Fungsi Halaman Berdasarkan Menu ======
 
 page_names_to_funcs = {
-    "Dashboard": Dashboard,
     "Introduction": Introduction,
     "Dataset Information": Dataset_Information,
     "Preprocessing": Preprocessing,
