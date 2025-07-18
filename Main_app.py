@@ -99,7 +99,7 @@ def Preprocessing():
     
     rembg1 = Image.open("Images/ciherang_rembg.png").resize((400, 400))
     rembg2 = Image.open("Images/ir64_rembg.png").resize((400, 400))
-    rembg2 = Image.open("Images/mentik_rembg.png").resize((400, 400))
+    rembg3 = Image.open("Images/mentik_rembg.png").resize((400, 400))
     
     col1, col2, col3 = st.columns(3)
     with col1:
@@ -120,13 +120,19 @@ def Preprocessing():
     st.write("""
             Setelah nilai intensitas abu-abu dihitung, setiap pixel dalam gambar asli (yang berisi tiga nilai R, G, dan B) digantikan oleh satu nilai grey
     """)
-    st.image("Images/grayscale.png", caption= "Grayscale Image")
-    st.subheader("")
-    st.write("""
-    """)
-    st.subheader("")
-    st.write("""
-    """)
+    # st.image("Images/grayscale.png", caption= "Grayscale Image")
+    gray1 = Image.open("Images/ciherang_gray.png").resize((400, 400))
+    gray2 = Image.open("Images/ir64_gray.png").resize((400, 400))
+    gray3 = Image.open("Images/mentik_gray.png").resize((400, 400))
+    
+    col1, col2, col3 = st.columns(3)
+    with col1:
+        st.image(gray1, caption="Ciherang", use_container_width=True)
+    with col2:
+        st.image(gray2, caption="IR64", use_container_width=True)
+     with col3:
+        st.image(gray3, caption="Mentik Susu", use_container_width=True)
+
     st.subheader("3. Image Cropping")
     st.write("""
             Proses cropping dilakukan dengan metode thresholding dan kontur. Pada tahap awal, gambar diubah menjadi binary mask menggunakan dengan nilai ambang 10
