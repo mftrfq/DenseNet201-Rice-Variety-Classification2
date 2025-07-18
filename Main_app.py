@@ -114,6 +114,7 @@ def Preprocessing():
     st.write("""
             Setelah nilai intensitas abu-abu dihitung, setiap pixel dalam gambar asli (yang berisi tiga nilai R, G, dan B) digantikan oleh satu nilai grey
     """)
+    st.image("Images/grayscale.png", caption= "Grayscale")
     st.subheader("")
     st.write("""
     """)
