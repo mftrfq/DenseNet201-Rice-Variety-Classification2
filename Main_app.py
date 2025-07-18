@@ -140,7 +140,18 @@ def Preprocessing():
             Selanjutnya, kontur yang terdeteksi dari binary mask digunakan untuk membuat bounding box. Bounding box ini kemudian diperbesar dengan padding 1.5 yang selanjutnya 
             akan dilakukan array slicing berdasarkan koordinat yang didapat dari bounding box
     """)
-    st.image("Images/cropped.png", caption = "Cropped Image")
+    # st.image("Images/cropped.png", caption = "Cropped Image")
+    crop1 = Image.open("Images/ciherang_crop.png").resize((400, 400))
+    crop2 = Image.open("Images/ir64_crop.png").resize((400, 400))
+    crop3 = Image.open("Images/mentik_crop.png").resize((400, 400))
+    
+    col1, col2, col3 = st.columns(3)
+    with col1:
+        st.image(crop1, caption="Ciherang", use_container_width=True)
+    with col2:
+        st.image(crop2, caption="IR64", use_container_width=True)
+     with col3:
+        st.image(crop3, caption="Mentik Susu", use_container_width=True)
 
 def Model_Training():
     st.markdown("# Model Training")
