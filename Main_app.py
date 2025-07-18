@@ -87,7 +87,7 @@ def Preprocessing():
             4. Fushion & Thresholding 
             5. Output Masking (RGBA) 
     """)
-    st.subheader("Arsitektur U2-Net")
+    st.markdown("#### Arsitektur U2-Net")
     u2net1 = Image.open("Images/u2netarch.png").resize((600, 400))
     u2net2 = Image.open("Images/RSU.png").resize((600, 400))
     col1, col2 = st.columns(2)
