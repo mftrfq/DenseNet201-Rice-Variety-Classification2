@@ -47,10 +47,6 @@ def import_and_predict(image_data, model):
     prediction = model.predict(img_reshape, verbose=0)
     return prediction
 
-def display_info(predicted_class):
-    st.warning(f"{predicted_class.upper()} VARIETY")
-    st.write(rice_info[predicted_class])
-
 # ====== Halaman-Halaman ======
 def Introduction():
     st.header("Latar Belakang")
@@ -382,9 +378,7 @@ def Prediction():
                     st.header("🔎 HASIL")
                     st.success("✅ Klasifikasi Berhasil")
                     st.warning(f"Varietas: {pred_class.upper()}")
-                    st.info(f"Confidence: {confidence:.2f}%")
-                    st.markdown("### 💡Informasi")
-                    display_info(pred_class)
+                    st.info(f"Confidence: {confidence:.2f}%"))
                 else:
                     st.info(f"Terdeteksi {object_count} butir beras (multiple grain)")
                     draw_img = cv2.cvtColor(np.array(image), cv2.COLOR_RGB2BGR)
