@@ -169,60 +169,90 @@ def Model_Training():
     st.subheader("Arsitektur DenseNet-201")
     st.image("Images/densenet201arch.png", caption = "Arsitektur DenseNet-201")
     st.markdown("### DenseNet-201 Layers")
-    data = {
-        "Layers": [
-            "Input",
-            "Convolution",
-            "Pooling",
-            "Dense Block 1",
-            "Transition Layer 1",
-            " ",
-            "Dense Block 2",
-            "Transition Layer 2",
-            " ",
-            "Dense Block 3",
-            "Transition Layer 3",
-            " ",
-            "Dense Block 4",
-            "Classification Layer",
-            " "
-        ],
-        "Details": [
-            "--",
-            "Convolution 7×7, Stride 2",
-            "Max Pool 3×3, Stride 2",
-            "[(Conv 1×1 @ Conv 3×3)] × 6",
-            "Convolution 1×1",
-            "Average Pool 2×2, Stride 2",
-            "[(Conv 1×1 @ Conv 3×3)] × 12",
-            "Convolution 1×1",
-            "Average Pool 2×2, Stride 2",
-            "[(Conv 1×1 @ Conv 3×3)] × 48",
-            "Convolution 1×1",
-            "Average Pool 2×2, Stride 2",
-            "[(Conv 1×1 @ Conv 3×3)] × 32",
-            "Global Average Pool 7×7",
-            "1000D Fully connected, Softmax"
-        ],
-        "Output Shape": [
-            "224×224×3",
-            "112×112×64",
-            "56×56×64",
-            "56×56×256",
-            "56×56×128",
-            "28×28×128",
-            "28×28×512",
-            "28×28×256",
-            "14×14×256",
-            "14×14×1792",
-            "14×14×896",
-            "7×7×896",
-            "7×7×1920",
-            "1920",
-            "1000"
+    # data = {
+    #     "Layers": [
+    #         "Input",
+    #         "Convolution",
+    #         "Pooling",
+    #         "Dense Block 1",
+    #         "Transition Layer 1",
+    #         " ",
+    #         "Dense Block 2",
+    #         "Transition Layer 2",
+    #         " ",
+    #         "Dense Block 3",
+    #         "Transition Layer 3",
+    #         " ",
+    #         "Dense Block 4",
+    #         "Classification Layer",
+    #         " "
+    #     ],
+    #     "Details": [
+    #         "--",
+    #         "Convolution 7×7, Stride 2",
+    #         "Max Pool 3×3, Stride 2",
+    #         "[(Conv 1×1 @ Conv 3×3)] × 6",
+    #         "Convolution 1×1",
+    #         "Average Pool 2×2, Stride 2",
+    #         "[(Conv 1×1 @ Conv 3×3)] × 12",
+    #         "Convolution 1×1",
+    #         "Average Pool 2×2, Stride 2",
+    #         "[(Conv 1×1 @ Conv 3×3)] × 48",
+    #         "Convolution 1×1",
+    #         "Average Pool 2×2, Stride 2",
+    #         "[(Conv 1×1 @ Conv 3×3)] × 32",
+    #         "Global Average Pool 7×7",
+    #         "1000D Fully connected, Softmax"
+    #     ],
+    #     "Output Shape": [
+    #         "224×224×3",
+    #         "112×112×64",
+    #         "56×56×64",
+    #         "56×56×256",
+    #         "56×56×128",
+    #         "28×28×128",
+    #         "28×28×512",
+    #         "28×28×256",
+    #         "14×14×256",
+    #         "14×14×1792",
+    #         "14×14×896",
+    #         "7×7×896",
+    #         "7×7×1920",
+    #         "1920",
+    #         "1000"
+    #     ]
+    # }  
+    # df = pd.DataFrame(data)
+    # st.table(df)
+    data = [
+        ["Input", "-", "224×224×3"],
+        ["Convolution", "Convolution 7×7, Stride 2", "112×112×64"],
+        ["Pooling", "Max Pool 3×3, Stride 2", "56×56×64"],
+        
+        ["Dense Block 1", "[Convolution 1×1 @ Convolution 3×3] × 6", "56×56×256"],
+        ["", "", ""],
+        ["Transition Layer 1", "Convolution 1×1", "56×56×128"],
+        ["", "Average Pool 2×2, Stride 2", "28×28×128"],
+    
+        ["Dense Block 2", "[Convolution 1×1 @ Convolution 3×3] × 12", "28×28×512"],
+        ["", "", ""],
+        ["Transition Layer 2", "Convolution 1×1", "28×28×256"],
+        ["", "Average Pool 2×2, Stride 2", "14×14×256"],
+    
+        ["Dense Block 3", "[Convolution 1×1 @ Convolution 3×3] × 48", "14×14×1792"],
+        ["", "", ""],
+        ["Transition Layer 3", "Convolution 1×1", "14×14×896"],
+        ["", "Average Pool 2×2, Stride 2", "7×7×896"],
+    
+        ["Dense Block 4", "[Convolution 1×1 @ Convolution 3×3] × 32", "7×7×1920"],
+        ["", "", ""],
+        
+        ["Classification Layer", "Global Average Pool 7×7", "1920"],
+        ["", "1000D Fully connected, Softmax", "1000"]
         ]
-    }  
-    df = pd.DataFrame(data)
+    
+    df = pd.DataFrame(data, columns=["Layers", "DenseNet-201", "Output Shape"])
+    st.subheader("Arsitektur DenseNet-201")
     st.table(df)
 
 def Model_Evaluation():
