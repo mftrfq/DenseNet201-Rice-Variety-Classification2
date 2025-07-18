@@ -63,9 +63,21 @@ def Introduction():
 def Dataset_Information():
     st.markdown("# Informasi Dataset")
     st.write("""
-        Dataset terdiri dari gambar biji padi yang telah dikategorikan berdasarkan varietasnya.
-        Terdapat data latih, validasi, dan pengujian dalam format citra.
+             Dataset yang digunakan merupakan data primer yang diperoleh melalui pemotretan langsung menggunakan kamera ponsel  dalam jarak 11.5 cm dari object 
+             dengan tingkat zoom maksimal dalam kondisi pencahayaan luar ruangan pada siang hari. Proses pengumpulan data dilakukan mulai dari tanggal 1 November 2024 
+             hingga 30 November 2024. <br>     Dataset yang terkumpul berjumlah 6000 data citra biji beras yang terbagi ke dalam 3 kelas yaitu Ciherang, IR64 dan Mentik Susu 
+             di mana masing-masing kelas terdiri dari 2.000  data dengan resolusi 3024×3024.
+             
     """)
+    st.markdown("## Sampel Data")
+    col1, col2, col3 = st.columns(3)
+    with col1:
+        st.image("Images/ciherang.jpg", caption="Varietas Ciherang", use_column_width=True)
+    with col2:
+        st.image("Images/ir64.jpg", caption="Varietas IR64", use_column_width=True)
+    with col3:
+        st.image("Images/mentik.jpg", caption="Varietas Mentik Susu", use_column_width=True)
+
 
 def Preprocessing():
     st.markdown("# Preprocessing 🔧")
