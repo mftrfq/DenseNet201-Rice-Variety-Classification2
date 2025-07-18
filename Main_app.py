@@ -207,6 +207,75 @@ def Preprocessing():
     with col3:
         st.image(crop3, caption="Mentik Susu", use_container_width=True)
 
+    st.markdown("---")
+
+    st.subheader("4. RGB Conversion")
+    st.write("""
+            Mengubah citra dari format grayscale kembali ke format RGB. Hal ini dilakukan dikarenakan Model DenseNet menerima input dengan 3 channel warna.
+            Proses RGB Conversion dilakukan dengan mereplikasi nilai intensitas channel grayscale ke ketiga channel RGB.
+    """)
+    st.markdown("**Sebelum (Grayscale 2D array):**")
+    st.code("""
+            [[128,  64, 200,  90,  30],
+             [  0, 255, 100, 150,  60],
+             [ 75,  80,  95,  40,  20],
+             [ 10, 220, 180,  70, 110],
+             [ 55,  33,  99, 121,  88]]
+    """, language='python')
+
+    st.markdown("**Sesudah (RGB 3D array):**")
+    st.code("""
+            [[[128,128,128], [ 64, 64, 64], [200,200,200], [ 90, 90, 90], [ 30, 30, 30]],
+             [[  0,  0,  0], [255,255,255], [100,100,100], [150,150,150], [ 60, 60, 60]],
+             [[ 75, 75, 75], [ 80, 80, 80], [ 95, 95, 95], [ 40, 40, 40], [ 20, 20, 20]],
+             [[ 10, 10, 10], [220,220,220], [180,180,180], [ 70, 70, 70], [110,110,110]],
+             [[ 55, 55, 55], [ 33, 33, 33], [ 99, 99, 99], [121,121,121], [ 88, 88, 88]]]
+    """, language='python')
+    
+    st.markdown("---")
+    
+    st.subheader("5. Image Resizing")
+    st.write("""
+            Image resizing dilakukan supaya data yang digunakan memiliki ukuran yang sesuai dengan dimensi input yang diperlukan oleh model DenseNet-201, 
+            sehingga ukuran citra akan diubah menjadi sesuai dengan input size model DenseNet-201 yaitu 224×224
+    """)
+    
+    resize1 = Image.open("Images/before_resize.png").resize((300, 300))
+    resize2 = Image.open("Images/after_resize.png").resize((224, 224))
+
+    col1, col2 = st.columns(2)
+    with col1:
+        st.image(resize1, caption = "Citra sebelum Image Resizing")
+    with col2:
+        st.image(resize2, caption = "Citra setelah Image Resizing")
+    st.markdown("---")
+    
+    st.subheader("6. Pixel Normalization")
+    st.write("""
+            Pixel normalization dilakukan dengan mengubah nilai pixel ke rentang tertentu yaitu 0 hingga 1, 
+            dengan cara membagi nilai setiap pixel dengan nilai maksimum (255). 
+            Proses ini membantu dalam meningkatkan stabilitas dan efisiensi pelatihan model, 
+            karena model dapat belajar dari data tanpa bias yang disebabkan oleh skala pixel yang berbeda
+    """)
+    st.markdown("**Sebelum (RGB 5x5 array):**")
+    st.code("""
+            [[[128,128,128], [ 64, 64, 64], [200,200,200], [ 90, 90, 90], [ 30, 30, 30]],
+             [[  0,  0,  0], [255,255,255], [100,100,100], [150,150,150], [ 60, 60, 60]],
+             [[ 75, 75, 75], [ 80, 80, 80], [ 95, 95, 95], [ 40, 40, 40], [ 20, 20, 20]],
+             [[ 10, 10, 10], [220,220,220], [180,180,180], [ 70, 70, 70], [110,110,110]],
+             [[ 55, 55, 55], [ 33, 33, 33], [ 99, 99, 99], [121,121,121], [ 88, 88, 88]]]
+    """, language='python')
+    
+    # Sesudah normalisasi
+    st.markdown("**Sesudah (Normalized RGB 5x5 array):**")
+    st.code("""
+            [[[0.502,0.502,0.502], [0.251,0.251,0.251], [0.784,0.784,0.784], [0.353,0.353,0.353], [0.118,0.118,0.118]],
+             [[0.000,0.000,0.000], [1.000,1.000,1.000], [0.392,0.392,0.392], [0.588,0.588,0.588], [0.235,0.235,0.235]],
+             [[0.294,0.294,0.294], [0.314,0.314,0.314], [0.373,0.373,0.373], [0.157,0.157,0.157], [0.078,0.078,0.078]],
+             [[0.039,0.039,0.039], [0.863,0.863,0.863], [0.706,0.706,0.706], [0.275,0.275,0.275], [0.431,0.431,0.431]],
+             [[0.216,0.216,0.216], [0.129,0.129,0.129], [0.388,0.388,0.388], [0.475,0.475,0.475], [0.345,0.345,0.345]]]
+    """, language='python')
+    
 def Model_Training():
     st.markdown("# Model Training")
     st.write("""
