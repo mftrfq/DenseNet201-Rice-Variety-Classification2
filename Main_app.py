@@ -106,7 +106,7 @@ def Preprocessing():
         st.image(rembg1, caption="Ciherang", use_container_width=True)
     with col2:
         st.image(rembg2, caption="IR64", use_container_width=True)
-     with col3:
+    with col3:
         st.image(rembg3, caption="Mentik Susu", use_container_width=True)
         
     st.subheader("2. Grayscale Conversion")
