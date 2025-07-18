@@ -59,7 +59,7 @@ def Introduction():
              Untuk mengatasinya, teknologi berbasis kecerdasan buatan (AI) dapat menjadi solusi yang menjanjikan. 
              Identifikasi otomatis dengan AI dapat meningkatkan akurasi, efisiensi, dan keandalan klasifikasi varietas beras, serta mendukung pengelolaan dan distribusi yang lebih baik.
     """)
-    st.markdown("---")
+    st.divider()
     
     st.header("Rumusan Masalah")
     st.markdown("#### - Permasalahan")
@@ -79,7 +79,7 @@ def Introduction():
     st.write("""
             Bagaimana tingkat Accuracy, Precision, Recall, dan F1-Score dari model DenseNet-201 berbasis Transfer Learning dibandingkan dengan Non-Transfer Learning dalam mengklasifikasikan varietas beras?
     """)
-    st.markdown("---")
+    st.divider()
 
     st.header("Tujuan dan Manfaat Penelitian") 
     st.markdown("#### - Tujuan Penelitian")
@@ -92,7 +92,7 @@ def Introduction():
             dan menghasilkan sistem klasifikasi yang akurat untuk mengidentifikasi varietas beras yang dapat digunakan sebagai solusi inovatif untuk mengatasi keterbatasan metode manual 
             serta dapat digunakan sebagai bahan rujukan untuk penelitian terkait selanjutnya
     """)
-    st.markdown("---")
+    st.divider()
 
     st.header("Batasan Masalah")
     st.write("""
@@ -101,7 +101,7 @@ def Introduction():
             3.	Penelitian ini difokuskan pada klasifikasi varietas beras berdasarkan citra digital biji beras.
             4.	Algoritma yang digunakan dalam penelitian ini adalah pre-trained model DenseNet-201.
     """)
-    st.markdown("---")
+    st.divider()
        
     st.header("Metodologi")
     left_co, cent_co,last_co = st.columns(3)
@@ -110,6 +110,8 @@ def Introduction():
 
 def Dataset_Information():
     st.markdown("# Informasi Dataset")
+    st.divider()
+    st.divider()
     st.write("""
              Dataset yang digunakan merupakan data primer yang diperoleh melalui pemotretan langsung menggunakan kamera ponsel  dalam jarak 11.5 cm dari object 
              dengan tingkat zoom maksimal dalam kondisi pencahayaan luar ruangan pada siang hari. Proses pengumpulan data dilakukan mulai dari tanggal 1 November 2024 
@@ -128,6 +130,7 @@ def Dataset_Information():
 
 def Preprocessing():
     st.markdown("# Preprocessing")
+    st.divider()
     st.subheader("1. Background Removing")
     st.write("""
             Penghapusan latar belakang dilakukan menggunakan library rembg yang memanfaatkan pre-trained model U2-Net. 
@@ -161,7 +164,7 @@ def Preprocessing():
         st.image(rembg2, caption="IR64", use_container_width=True)
     with col3:
         st.image(rembg3, caption="Mentik Susu", use_container_width=True)
-    st.markdown("---")
+    st.divider()
 
     st.subheader("2. Grayscale Conversion")
     st.write("""
@@ -186,7 +189,7 @@ def Preprocessing():
         st.image(gray2, caption="IR64", use_container_width=True)
     with col3:
         st.image(gray3, caption="Mentik Susu", use_container_width=True)
-    st.markdown("---")
+    st.divider()
 
     st.subheader("3. Image Cropping")
     st.write("""
@@ -207,8 +210,7 @@ def Preprocessing():
         st.image(crop2, caption="IR64", use_container_width=True)
     with col3:
         st.image(crop3, caption="Mentik Susu", use_container_width=True)
-
-    st.markdown("---")
+    st.divider()
 
     st.subheader("4. RGB Conversion")
     st.write("""
@@ -232,8 +234,7 @@ def Preprocessing():
              [[ 10, 10, 10], [220,220,220], [180,180,180], [ 70, 70, 70], [110,110,110]],
              [[ 55, 55, 55], [ 33, 33, 33], [ 99, 99, 99], [121,121,121], [ 88, 88, 88]]]
     """, language='python')
-    
-    st.markdown("---")
+    st.divider()
     
     st.subheader("5. Image Resizing")
     st.write("""
@@ -249,7 +250,7 @@ def Preprocessing():
         st.image(resize1, caption = "Citra sebelum Image Resizing")
     with col2:
         st.image(resize2, caption = "Citra setelah Image Resizing")
-    st.markdown("---")
+    st.divider()
     
     st.subheader("6. Pixel Normalization")
     st.write("""
@@ -278,6 +279,7 @@ def Preprocessing():
     
 def Model_Training():
     st.markdown("# Model Training")
+    st.divider()
     st.write("""
         Model dilatih menggunakan arsitektur **DenseNet201** dengan pendekatan Transfer Learning yang memanfaatkan pre-trained weight dari ImageNet.
         Hyperparameter yang digunakan:
@@ -350,6 +352,7 @@ def Model_Training():
 
 def Model_Evaluation():
     st.markdown("# Model Evaluation")
+    st.divider()
     st.write("""
             Evaluasi model dilakukan untuk performa model yang telah dilatih dalam mengklasifikasikan data yang tidak terlihat sebelumnya yang diukur 
             melalui nilai nilai metric score yang didapatkan berdasarkan confusion matrix
@@ -372,6 +375,7 @@ def Model_Evaluation():
 
 def Prediction():
     st.header("Prediction")
+    st.divider()
     with st.sidebar:
         st.sidebar.header("Select Image Source")
         img_source = st.radio("Image Source", ["Upload image", "Sample image"])
@@ -493,7 +497,18 @@ def Prediction():
             except Exception as e:
                 st.error("Gagal memproses gambar.")
                 st.error(str(e))
-
+def about_us():
+    st.header("Penelitian")
+    st.subheader("Klasifikasi Varietas Beras Menggunakan Transfer Learning dengan Arsitektur DenseNet-201")
+    st.markdown("#### Peneliti:")
+    st.markdown("""
+                1. Moch. Miftachur Rifqi Al Husain
+                2. Kurniawan Eka Permana, S.Kom., M.Sc.
+                3. Andharini Dwi Cahyani, S.Kom., M.Kom., Ph.D.
+    """)
+    st.markdown("#### Institusi: Universitas Trunojoyo Madura")
+    st.markdown("#### Tahun Penelitian: 2025")
+    
 # ====== Menu Sidebar (Option Menu) ======
 with st.sidebar:
     selected = option_menu(
