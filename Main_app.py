@@ -192,15 +192,15 @@ def Model_Evaluation():
     st.write("""
             Sehingga melalui confusion matrix dapat diketahui beberapa evaluation metric seperti Accuracy, Precision, recall, dan F1-Score sebagai berikut
     """)
-    mtrcs = {
-        "Class": ["ciherang", "ir64", "mentik", "accuracy", "macro avg", "weighted avg"],
-        "Precision": [0.87, 0.92, 0.99, "", 0.93, 0.93],
-        "Recall": [0.92, 0.89, 0.97, "", 0.93, 0.93],
-        "F1-Score": [0.89, 0.90, 0.98, 0.93, 0.93, 0.93],
-        "Support": [200, 200, 200, 600, 600, 600]
+    data = {
+    "Class": ["ciherang", "ir64", "mentik", "accuracy", "macro avg", "weighted avg"],
+    "Precision": [0.87, 0.92, 0.99, None, 0.93, 0.93],
+    "Recall":    [0.92, 0.89, 0.97, None, 0.93, 0.93],
+    "F1-Score":  [0.89, 0.90, 0.98, 0.93, 0.93, 0.93],
+    "Support":   [200, 200, 200, 600, 600, 600]
     }
     
-    df = pd.DataFrame(mtrcs)
+    df = pd.DataFrame(data)
     st.subheader("Hasil Evaluasi Model")
     st.table(df)
 
