@@ -339,8 +339,6 @@ def Prediction():
             st.header("🔎HASIL")
             st.warning(f"Varietas: {pred_class.upper()}")
             st.info(f"Confidence: {confidence:.2f}%")
-            st.markdown("### 💡Informasi")
-            display_info(pred_class)
         else:
             st.info("Pilih salah satu sample untuk prediksi")
 
@@ -353,7 +351,7 @@ def Prediction():
                 file_bytes = file.read()
                 image_buffer = BytesIO(file_bytes)
                 image = Image.open(image_buffer).convert('RGB')
-                st.image(image, caption="Gambar yang diunggah", use_column_width=True)
+                st.image(image, caption="Gambar yang diunggah", use_container_width=True)
 
                 rembg_buffer = BytesIO(file_bytes)
                 output_bytes = remove(rembg_buffer.read())
@@ -376,7 +374,6 @@ def Prediction():
                     pred_class = class_names[np.argmax(predictions)]
 
                     st.header("🔎 HASIL")
-                    st.success("✅ Klasifikasi Berhasil")
                     st.warning(f"Varietas: {pred_class.upper()}")
                     st.info(f"Confidence: {confidence:.2f}%")
                 else:
@@ -412,16 +409,13 @@ def Prediction():
 
                     st.image(cv2.cvtColor(draw_img, cv2.COLOR_BGR2RGB), caption="Hasil Klasifikasi", use_container_width=True)
                     st.header("🔎 RINGKASAN")
-                    st.success("✅ Klasifikasi Berhasil")
-                    st.markdown(f"Total biji terklasifikasi: {sum(variety_counter.values())}")
+                    st.markdown(f"Jumlah beras teridentifikasi: {sum(variety_counter.values())}")
                     for variety, total in variety_counter.items():
                         st.markdown(f"{variety.upper()}: {total} butir")
 
             except Exception as e:
                 st.error("Gagal memproses gambar.")
                 st.error(str(e))
-
-    
 
 # ====== Menu Sidebar (Option Menu) ======
 with st.sidebar:
