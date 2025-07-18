@@ -144,7 +144,7 @@ def Model_Training():
             " "
         ],
         "Details": [
-            "",
+            "--",
             "Convolution 7×7, Stride 2",
             "Max Pool 3×3, Stride 2",
             "[(Conv 1×1 @ Conv 3×3)] × 6",
