@@ -296,7 +296,7 @@ def Prediction():
     st.header("Prediction")
     with st.sidebar:
         st.sidebar.header("Select Image Source")
-        img_source = st.radio("Upload image", "Sample image")
+        img_source = st.radio("Image Souce", ["Upload image", "Sample image"])
 
     sample_images = {
         "Ciherang": [
