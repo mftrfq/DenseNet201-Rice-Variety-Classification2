@@ -156,7 +156,7 @@ with st.sidebar:
             "Prediction"
         ],
         icons=["house", "info-circle", "bar-chart", "tools", "cpu", "clipboard-check", "search"],
-        menu_icon="",
+        menu_icon="🌾",
         default_index=0,
     )
 
