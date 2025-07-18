@@ -345,6 +345,9 @@ def Model_Training():
     df = pd.DataFrame(data)
     st.table(df)
 
+    st.subheader("Model History")
+    st.image("Images/model_history.png", caption = "Model Training History")
+
 def Model_Evaluation():
     st.markdown("# Model Evaluation")
     st.write("""
