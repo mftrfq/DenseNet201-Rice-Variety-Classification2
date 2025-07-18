@@ -512,7 +512,7 @@ def About_us():
 # ====== Menu Sidebar (Option Menu) ======
 with st.sidebar:
     selected = option_menu(
-        menu_title="Rice Variety Classification",
+        menu_title="Option Menu",
         options=[
             "Introduction", 
             "Dataset Information", 
@@ -522,7 +522,7 @@ with st.sidebar:
             "Prediction",
             "About Us"
         ],
-        icons=["info-circle", "bar-chart", "tools", "cpu", "clipboard-check", "search", "info"],
+        icons=["info-circle", "bar-chart", "tools", "cpu", "clipboard-check", "search", "search"],
         default_index=0,
     )
 
