@@ -49,8 +49,8 @@ def import_and_predict(image_data, model):
 
 # ====== Halaman-Halaman ======
 def Introduction():
-    st.title("KLASIFIKASI VARIETAS BERAS MENGGUNAKAN TRANSFER LEARNING DENGAN ARSITEKTUR DENSENET-201")
-    st.header("Latar Belakang", divider = "gray")
+    st.title("KLASIFIKASI VARIETAS BERAS MENGGUNAKAN TRANSFER LEARNING DENGAN ARSITEKTUR DENSENET-201", divider = "gray")
+    st.header("Latar Belakang")
     st.write("""
              Beras merupakan komoditas pangan utama dan sumber karbohidrat penting bagi masyarakat Indonesia. 
              Konsumsinya terus meningkat dan mencapai 30,34 juta ton pada tahun 2024, menjadikannya sangat vital bagi ketahanan pangan nasional. 
@@ -215,7 +215,7 @@ def Preprocessing():
             Mengubah citra dari format grayscale kembali ke format RGB. Hal ini dilakukan dikarenakan Model DenseNet menerima input dengan 3 channel warna.
             Proses RGB Conversion dilakukan dengan mereplikasi nilai intensitas channel grayscale ke ketiga channel RGB.
     """)
-    st.markdown("**Sebelum (Grayscale 2D array):**")
+    st.markdown("**Pixel sebelum RGB Conversion:**")
     st.code("""
             [[128,  64, 200,  90,  30],
              [  0, 255, 100, 150,  60],
@@ -224,7 +224,7 @@ def Preprocessing():
              [ 55,  33,  99, 121,  88]]
     """, language='python')
 
-    st.markdown("**Sesudah (RGB 3D array):**")
+    st.markdown("**Pixel setelah RGB Conversion:**")
     st.code("""
             [[[128,128,128], [ 64, 64, 64], [200,200,200], [ 90, 90, 90], [ 30, 30, 30]],
              [[  0,  0,  0], [255,255,255], [100,100,100], [150,150,150], [ 60, 60, 60]],
@@ -258,7 +258,7 @@ def Preprocessing():
             Proses ini membantu dalam meningkatkan stabilitas dan efisiensi pelatihan model, 
             karena model dapat belajar dari data tanpa bias yang disebabkan oleh skala pixel yang berbeda
     """)
-    st.markdown("**Sebelum (RGB 5x5 array):**")
+    st.markdown("**Pixel sebelum Normalization:**")
     st.code("""
             [[[128,128,128], [ 64, 64, 64], [200,200,200], [ 90, 90, 90], [ 30, 30, 30]],
              [[  0,  0,  0], [255,255,255], [100,100,100], [150,150,150], [ 60, 60, 60]],
@@ -267,8 +267,7 @@ def Preprocessing():
              [[ 55, 55, 55], [ 33, 33, 33], [ 99, 99, 99], [121,121,121], [ 88, 88, 88]]]
     """, language='python')
     
-    # Sesudah normalisasi
-    st.markdown("**Sesudah (Normalized RGB 5x5 array):**")
+    st.markdown("**Pixel setelah Normalization:**")
     st.code("""
             [[[0.502,0.502,0.502], [0.251,0.251,0.251], [0.784,0.784,0.784], [0.353,0.353,0.353], [0.118,0.118,0.118]],
              [[0.000,0.000,0.000], [1.000,1.000,1.000], [0.392,0.392,0.392], [0.588,0.588,0.588], [0.235,0.235,0.235]],
