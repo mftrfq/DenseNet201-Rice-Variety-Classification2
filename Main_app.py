@@ -294,10 +294,8 @@ def Model_Evaluation():
 
 def Prediction():
     st.header("Prediction")
-    st.write("Upload gambar biji padi untuk prediksi varietasnya.")
-
     with st.sidebar:
-        img_source = st.radio("Pilih sumber gambar", ("Upload image", "Sample image"))
+        img_source = st.radio("Image Source", ("Upload image", "Sample image"))
 
     sample_images = {
         "Ciherang": [
