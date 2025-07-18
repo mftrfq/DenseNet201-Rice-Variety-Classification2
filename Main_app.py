@@ -183,8 +183,15 @@ def Model_Training():
 
 def Model_Evaluation():
     st.markdown("# Model Evaluation")
+    st.write("""
+            Evaluasi model dilakukan untuk performa model yang telah dilatih dalam mengklasifikasikan data yang tidak terlihat sebelumnya yang diukur 
+            melalui nilai nilai metric score yang didapatkan berdasarkan confusion matrix
+    """)
     st.image("Images/confusionmtx.png", caption = "Confusion Matrix")
-    st.write("Classification Report")
+    st.write("### Classification Report")
+    st.write("""
+            Sehingga melalui confusion matrix dapat diketahui beberapa evaluation metric seperti Accuracy, Precision, recall, dan F1-Score sebagai berikut
+    """)
     mtrcs = {
         "Class": ["ciherang", "ir64", "mentik", "accuracy", "macro avg", "weighted avg"],
         "Precision": [0.87, 0.92, 0.99, "", 0.93, 0.93],
@@ -208,7 +215,6 @@ def Prediction():
         st.write("Prediksi: **Varietas IR64**")  # Ganti bagian ini jika ada model asli
 
 # ====== Menu Sidebar (Option Menu) ======
-
 with st.sidebar:
     selected = option_menu(
         menu_title="Rice Variety Classification",
