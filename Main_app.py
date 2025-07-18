@@ -183,7 +183,7 @@ def Model_Training():
 
 def Model_Evaluation():
     st.markdown("# Model Evaluation")
-    st.image("Images/confusionmtx.jpg", caption = "Confusion Matrix")
+    st.image("Images/confusionmtx.png", caption = "Confusion Matrix")
     st.write("Classification Report")
     mtrcs = {
         "Class": ["ciherang", "ir64", "mentik", "accuracy", "macro avg", "weighted avg"],
@@ -196,7 +196,6 @@ def Model_Evaluation():
     df = pd.DataFrame(mtrcs)
     st.subheader("Hasil Evaluasi Model")
     st.table(df)
-
 
 def Prediction():
     st.markdown("# Prediction")
