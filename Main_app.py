@@ -72,25 +72,40 @@ def Dataset_Information():
     st.markdown("## Sampel Data")
     col1, col2, col3 = st.columns(3)
     with col1:
-        st.image("Images/Ciherang.jpg", caption="Varietas Ciherang", use_column_width=True)
+        st.image("Images/Ciherang.jpg", caption="Varietas Ciherang", use_container_width=True)
     with col2:
-        st.image("Images/IR64.jpg", caption="Varietas IR64", use_column_width=True)
+        st.image("Images/IR64.jpg", caption="Varietas IR64", use_container_width=True)
     with col3:
-        st.image("Images/Mentik.jpg", caption="Varietas Mentik Susu", use_column_width=True)
+        st.image("Images/Mentik.jpg", caption="Varietas Mentik Susu", use_container_width=True)
 
 
 def Preprocessing():
     st.markdown("# Preprocessing 🔧")
+    st.subheading("1. Background Removing")
     st.write("""
-        Tahapan preprocessing meliputi:
-        1. Penghapusan background (rembg)
-        2. Konversi grayscale
-        3. CLAHE
-        4. Cropping objek
-        5. Konversi RGB
-        6. Resize
-        7. Normalisasi pixel
+            Penghapusan latar belakang dilakukan menggunakan library rembg yang memanfaatkan pre-trained model U2-Net. Dengan cara kerjanya adalah: <br>
+            1. Input RGB <br>
+            2. Two-Level U-Structure (Encoder & Decoder) <br>
+            3. Probability Maps <br>
+            4. Fushion & Thresholding <br>
+            5. Output Masking (RGBA) <br>
     """)
+    st.subheading("Arsitektur U2-Net")
+    st.image("Images/u2netarch.jpg", caption="Arsitektur U2-Net")
+    st.image("Images/RSU.jpg", caption="Komponen Decoder-Encoder")
+    st.markdown("## Hasil")
+    st.image("Images/bgremoved.jpg", caption="Background Removed")
+    
+    st.subheading("2. Grayscale Conversion")
+    st.write("""
+    """)
+    st.subheading("")
+    st.write("""
+    """)
+    st.subheading("")
+    st.write("""
+    """)
+    
 
 def Model_Training():
     st.markdown("# Model Training 🧠")
