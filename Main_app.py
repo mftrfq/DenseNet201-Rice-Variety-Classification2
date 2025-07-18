@@ -1,12 +1,13 @@
 import streamlit as st
 from streamlit_option_menu import option_menu
 from PIL import Image
+import pandas as pd
 
 # ====== Halaman-Halaman ======
 
 def Dashboard():
-    st.markdown("# Dashboard 🎈")
-    st.write("Selamat datang di aplikasi klasifikasi varietas padi!")
+    st.markdown("# Dashboard")
+    st.write("Selamat datang")
 
 def Introduction():
     st.title("Latar Belakang")
@@ -81,7 +82,7 @@ def Dataset_Information():
 
 
 def Preprocessing():
-    st.markdown("# Preprocessing 🔧")
+    st.markdown("# Preprocessing")
     st.subheader("1. Background Removing")
     st.write("""
             Penghapusan latar belakang dilakukan menggunakan library rembg yang memanfaatkan pre-trained model U2-Net. Dengan cara kerjanya adalah: 
@@ -114,15 +115,76 @@ def Preprocessing():
     
 
 def Model_Training():
-    st.markdown("# Model Training 🧠")
+    st.markdown("# Model Training")
     st.write("""
-        Model dilatih menggunakan arsitektur **DenseNet201** dengan pendekatan Transfer Learning dan Non-Transfer Learning.
+        Model dilatih menggunakan arsitektur **DenseNet201** dengan pendekatan Transfer Learning yang memanfaatkan pre-trained weight dari ImageNet.
         Hyperparameter yang digunakan:
         - Optimizer: Adam
         - Learning rate: 0.001
         - Batch size: 32
         - Epoch: 30
     """)
+    st.image("Images/densenet201arch.jpg", caption = "Arsitektur DenseNet-201")
+    data = {
+        "Layers": [
+            "Input",
+            "Convolution",
+            "Pooling",
+            "Dense Block 1",
+            "Transition Layer 1",
+            " ",
+            "Dense Block 2",
+            "Transition Layer 2",
+            " ",
+            "Dense Block 3",
+            "Transition Layer 3",
+            " ",
+            "Dense Block 4",
+            "Classification Layer",
+            " "
+        ],
+        "Details": [
+            "-",
+            "Convolution 7×7, Stride 2",
+            "Max Pool 3×3, Stride 2",
+            "[(Conv 1×1 @ Conv 3×3)] × 6",
+            "Convolution 1×1",
+            "Average Pool 2×2, Stride 2",
+            "[(Conv 1×1 @ Conv 3×3)] × 12",
+            "Convolution 1×1",
+            "Average Pool 2×2, Stride 2",
+            "[(Conv 1×1 @ Conv 3×3)] × 48",
+            "Convolution 1×1",
+            "Average Pool 2×2, Stride 2",
+            "[(Conv 1×1 @ Conv 3×3)] × 32",
+            "Global Average Pool 7×7",
+            "1000D Fully connected, Softmax"
+        ],
+        "Output Shape": [
+            "224×224×3",
+            "112×112×64",
+            "56×56×64",
+            "56×56×256",
+            "56×56×128",
+            "28×28×128",
+            "28×28×512",
+            "28×28×256",
+            "14×14×256",
+            "14×14×1792",
+            "14×14×896",
+            "7×7×896",
+            "7×7×1920",
+            "1920",
+            "1000"
+        ]
+    }
+    
+    df = pd.DataFrame(data)
+    
+    # Tampilkan Tabel
+    st.subheader("Arsitektur DenseNet-201")
+    st.table(df)
+
 
 def Model_Evaluation():
     st.markdown("# Model Evaluation 📊")
@@ -138,7 +200,7 @@ def Model_Evaluation():
     """)
 
 def Prediction():
-    st.markdown("# Prediction 🔍")
+    st.markdown("# Prediction")
     st.write("Upload gambar biji padi untuk prediksi varietasnya.")
 
     uploaded_file = st.file_uploader("Upload gambar...", type=["jpg", "png", "jpeg"])
