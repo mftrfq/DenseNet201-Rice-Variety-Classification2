@@ -130,7 +130,7 @@ def Preprocessing():
         st.image(gray1, caption="Ciherang", use_container_width=True)
     with col2:
         st.image(gray2, caption="IR64", use_container_width=True)
-     with col3:
+    with col3:
         st.image(gray3, caption="Mentik Susu", use_container_width=True)
 
     st.subheader("3. Image Cropping")
@@ -150,7 +150,7 @@ def Preprocessing():
         st.image(crop1, caption="Ciherang", use_container_width=True)
     with col2:
         st.image(crop2, caption="IR64", use_container_width=True)
-     with col3:
+    with col3:
         st.image(crop3, caption="Mentik Susu", use_container_width=True)
 
 def Model_Training():
