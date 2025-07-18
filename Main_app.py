@@ -1,7 +1,55 @@
 import streamlit as st
 from streamlit_option_menu import option_menu
-from PIL import Image
+from PIL import Image, ImageOps
 import pandas as pd
+import numpy as np
+import tensorflow as tf
+import matplotlib.pyplot as plt
+import warnings
+import cv2
+from rembg import remove
+from io import BytesIO
+from collections import Counter
+import os
+import gdown
+
+warnings.filterwarnings("ignore")
+
+st.set_page_config(
+    page_title="Rice Variety Classification",
+    page_icon="🌾",
+    initial_sidebar_state='auto'
+)
+
+@st.cache_resource
+def load_model():
+    drive_id = "14T6m4berh-Z_WjMFaQ07sQDthquWjkyk"
+    filename = "TL_model_30epoch.keras"
+    if not os.path.exists(filename):
+        url = f"https://drive.google.com/uc?id={drive_id}"
+        gdown.download(url, filename, quiet=False)
+    model = tf.keras.models.load_model(filename)
+    return model
+
+model = load_model()
+class_names = ['ciherang', 'ir64', 'mentik']
+label_colors = {
+    'ciherang': (255, 0, 0),
+    'ir64': (0, 0, 255),
+    'mentik': (0, 255, 0),
+}
+
+def import_and_predict(image_data, model):
+    size = (224, 224)
+    image = ImageOps.fit(image_data, size, Image.Resampling.LANCZOS)
+    img = np.asarray(image) / 255.0
+    img_reshape = img[np.newaxis, ...]
+    prediction = model.predict(img_reshape, verbose=0)
+    return prediction
+
+def display_info(predicted_class):
+    st.warning(f"{predicted_class.upper()} VARIETY")
+    st.write(rice_info[predicted_class])
 
 # ====== Halaman-Halaman ======
 def Introduction():
@@ -249,14 +297,137 @@ def Model_Evaluation():
     st.table(df)
 
 def Prediction():
-    st.markdown("# Prediction")
+    st.header("Prediction")
     st.write("Upload gambar biji padi untuk prediksi varietasnya.")
 
-    uploaded_file = st.file_uploader("Upload gambar...", type=["jpg", "png", "jpeg"])
-    if uploaded_file is not None:
-        st.image(uploaded_file, caption="Gambar yang diunggah", use_column_width=True)
-        st.success("Model prediksi akan ditampilkan di sini (simulasi).")
-        st.write("Prediksi: **Varietas IR64**")  # Ganti bagian ini jika ada model asli
+    with st.sidebar:
+        img_source = st.radio("Pilih sumber gambar", ("Upload image", "Sample image"))
+
+    sample_images = {
+        "Ciherang": [
+            r'Images/sampel ciherang_1.png',
+            r'Images/sampel ciherang_2.png',
+            r'Images/sampel ciherang_3.png'
+        ],
+        "IR64": [
+            r'Images/sampel ir64_1.png',
+            r'Images/sampel ir64_2.png',
+            r'Images/sampel ir64_3.png'
+        ],
+        "Mentik": [
+            r'Images/sampel mentik_1.png',
+            r'Images/sampel mentik_2.png',
+            r'Images/sampel mentik_3.png'
+        ]
+    }
+
+    if img_source == "Sample image":
+        st.sidebar.header("Pilih kelas")
+        selected_class = st.sidebar.selectbox("Varietas Padi", list(sample_images.keys()))
+        st.header(f"Sample dari {selected_class}")
+        columns = st.columns(3)
+        selected_image = None
+        for i, image_path in enumerate(sample_images[selected_class]):
+            with columns[i % 3]:
+                image = Image.open(image_path)
+                st.image(image, caption=f"Sample {i + 1}", use_container_width=True)
+                if st.button(f"Gunakan Sample {i + 1}", key=image_path):
+                    selected_image = image_path
+
+        if selected_image:
+            image = Image.open(selected_image).convert('RGB')
+            st.image(image, caption=selected_image, use_container_width=True)
+            predictions = import_and_predict(image, model)
+            confidence = np.max(predictions) * 100
+            pred_class = class_names[np.argmax(predictions)]
+            st.header("🔎HASIL")
+            st.warning(f"Varietas: {pred_class.upper()}")
+            st.info(f"Confidence: {confidence:.2f}%")
+            st.markdown("### 💡Informasi")
+            display_info(pred_class)
+        else:
+            st.info("Pilih salah satu sample untuk prediksi")
+
+    else:
+        file = st.file_uploader("Upload gambar...", type=["jpg", "png", "jpeg"])
+        if file is None:
+            st.info("Silakan upload gambar beras")
+        else:
+            try:
+                file_bytes = file.read()
+                image_buffer = BytesIO(file_bytes)
+                image = Image.open(image_buffer).convert('RGB')
+                st.image(image, caption="Gambar yang diunggah", use_column_width=True)
+
+                rembg_buffer = BytesIO(file_bytes)
+                output_bytes = remove(rembg_buffer.read())
+                img_no_bg = Image.open(BytesIO(output_bytes)).convert("RGB")
+                img_np = np.array(img_no_bg)
+
+                gray = cv2.cvtColor(np.array(image), cv2.COLOR_RGB2GRAY)
+                _, binary = cv2.threshold(gray, 0, 255, cv2.THRESH_BINARY + cv2.THRESH_OTSU)
+                num_labels, labels, stats, centroids = cv2.connectedComponentsWithStats(binary, connectivity=8)
+
+                object_count = 0
+                for i in range(1, num_labels):
+                    area = stats[i, cv2.CC_STAT_AREA]
+                    if area >= 300:
+                        object_count += 1
+
+                if object_count <= 1:
+                    predictions = import_and_predict(image, model)
+                    confidence = np.max(predictions) * 100
+                    pred_class = class_names[np.argmax(predictions)]
+
+                    st.header("🔎 HASIL")
+                    st.success("✅ Klasifikasi Berhasil")
+                    st.warning(f"Varietas: {pred_class.upper()}")
+                    st.info(f"Confidence: {confidence:.2f}%")
+                    st.markdown("### 💡Informasi")
+                    display_info(pred_class)
+                else:
+                    st.info(f"Terdeteksi {object_count} butir beras (multiple grain)")
+                    draw_img = cv2.cvtColor(np.array(image), cv2.COLOR_RGB2BGR)
+                    variety_counter = Counter()
+
+                    for i in range(1, num_labels):
+                        x, y, w, h, area = stats[i]
+                        cx, cy = centroids[i]
+                        if area < 300:
+                            continue
+
+                        side = int(max(w, h) * 1.5)
+                        cx_int, cy_int = int(cx), int(cy)
+                        x1 = max(0, cx_int - side // 2)
+                        y1 = max(0, cy_int - side // 2)
+                        side = min(side, min(img_np.shape[1] - x1, img_np.shape[0] - y1))
+
+                        crop = img_np[y1:y1 + side, x1:x1 + side]
+                        resized = cv2.resize(crop, (224, 224))
+                        x_input = tf.expand_dims(resized / 255.0, axis=0)
+
+                        pred = model.predict(x_input, verbose=0)
+                        score = tf.nn.softmax(pred[0])
+                        label = class_names[np.argmax(score)]
+                        color = label_colors.get(label, (0, 255, 255))
+
+                        cv2.rectangle(draw_img, (x1, y1), (x1 + side, y1 + side), color, 2)
+                        cv2.putText(draw_img, label, (x1, y1 - 10), cv2.FONT_HERSHEY_SIMPLEX,
+                                    fontScale=1.2, color=color, thickness=2)
+                        variety_counter[label] += 1
+
+                    st.image(cv2.cvtColor(draw_img, cv2.COLOR_BGR2RGB), caption="Hasil Klasifikasi", use_container_width=True)
+                    st.header("🔎 RINGKASAN")
+                    st.success("✅ Klasifikasi Berhasil")
+                    st.markdown(f"Total biji terklasifikasi: {sum(variety_counter.values())}")
+                    for variety, total in variety_counter.items():
+                        st.markdown(f"{variety.upper()}: {total} butir")
+
+            except Exception as e:
+                st.error("Gagal memproses gambar.")
+                st.error(str(e))
+
+    
 
 # ====== Menu Sidebar (Option Menu) ======
 with st.sidebar:
