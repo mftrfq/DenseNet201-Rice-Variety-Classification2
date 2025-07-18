@@ -85,7 +85,7 @@ def Preprocessing():
     st.markdown("#### Arsitektur U2-Net")
     u2net1 = Image.open("Images/u2netarch.png").resize((600, 400))
     u2net2 = Image.open("Images/RSU.png").resize((600, 400))
-    st.mark(""""
+    st.write(""""
             Cara kerjanya adalah: 
             1. Input RGB 
             2. Two-Level U-Structure (Encoder & Decoder) 
