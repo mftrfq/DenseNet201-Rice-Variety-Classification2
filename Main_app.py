@@ -84,12 +84,12 @@ def Preprocessing():
     st.markdown("# Preprocessing 🔧")
     st.subheader("1. Background Removing")
     st.write("""
-            Penghapusan latar belakang dilakukan menggunakan library rembg yang memanfaatkan pre-trained model U2-Net. Dengan cara kerjanya adalah: <br>
-            1. Input RGB <br>
-            2. Two-Level U-Structure (Encoder & Decoder) <br>
-            3. Probability Maps <br>
-            4. Fushion & Thresholding <br>
-            5. Output Masking (RGBA) <br>
+            Penghapusan latar belakang dilakukan menggunakan library rembg yang memanfaatkan pre-trained model U2-Net. Dengan cara kerjanya adalah: 
+            1. Input RGB 
+            2. Two-Level U-Structure (Encoder & Decoder) 
+            3. Probability Maps 
+            4. Fushion & Thresholding 
+            5. Output Masking (RGBA) 
     """)
     st.subheader("Arsitektur U2-Net")
     rembg1 = Image.open("Images/u2netarch.png").resize((600, 400))
@@ -99,7 +99,7 @@ def Preprocessing():
         st.image(rembg1, caption="Arsitektur U2-Net", use_container_width=True)
     with col2:
         st.image(rembg2, caption="Komponen Decoder-Encoder", use_container_width=True)
-    st.markdown("## Hasil")
+    st.markdown("### Hasil")
     st.image("Images/bgremoved.png", caption="Background Removed")
     
     st.subheader("2. Grayscale Conversion")
