@@ -80,7 +80,6 @@ def Dataset_Information():
     with col3:
         st.image("Images/Mentik.jpg", caption="Varietas Mentik Susu", use_container_width=True)
 
-
 def Preprocessing():
     st.markdown("# Preprocessing")
     st.subheader("1. Background Removing")
@@ -113,7 +112,6 @@ def Preprocessing():
     st.write("""
     """)
     
-
 def Model_Training():
     st.markdown("# Model Training")
     st.write("""
@@ -184,17 +182,21 @@ def Model_Training():
     st.table(df)
 
 def Model_Evaluation():
-    st.markdown("# Model Evaluation 📊")
-    st.write("""
-        Evaluasi model menggunakan metrik:
-        - Accuracy
-        - Precision
-        - Recall
-        - F1-score
-        - Confusion Matrix
+    st.markdown("# Model Evaluation")
+    st.image("Images/confusionmtx.jpg", caption = "Confusion Matrix")
+    st.write("Classification Report")
+    mtrcs = {
+        "Class": ["ciherang", "ir64", "mentik", "accuracy", "macro avg", "weighted avg"],
+        "Precision": [0.87, 0.92, 0.99, "", 0.93, 0.93],
+        "Recall": [0.92, 0.89, 0.97, "", 0.93, 0.93],
+        "F1-Score": [0.89, 0.90, 0.98, 0.93, 0.93, 0.93],
+        "Support": [200, 200, 200, 600, 600, 600]
+    }
+    
+    df = pd.DataFrame(mtrcs)
+    st.subheader("Hasil Evaluasi Model")
+    st.table(df)
 
-        Hasil evaluasi menunjukkan bahwa metode Transfer Learning menghasilkan akurasi lebih tinggi dibanding Non-Transfer Learning.
-    """)
 
 def Prediction():
     st.markdown("# Prediction")
