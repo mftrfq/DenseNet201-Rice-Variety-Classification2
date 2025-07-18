@@ -4,11 +4,6 @@ from PIL import Image
 import pandas as pd
 
 # ====== Halaman-Halaman ======
-
-def Dashboard():
-    st.markdown("# Dashboard")
-    st.write("Selamat datang")
-
 def Introduction():
     st.header("Latar Belakang")
     st.write("""
@@ -236,7 +231,6 @@ with st.sidebar:
     selected = option_menu(
         menu_title="Rice Variety Classification",
         options=[
-            "Dashboard", 
             "Introduction", 
             "Dataset Information", 
             "Preprocessing", 
@@ -244,7 +238,7 @@ with st.sidebar:
             "Model Evaluation", 
             "Prediction"
         ],
-        icons=["house", "info-circle", "bar-chart", "tools", "cpu", "clipboard-check", "search"],
+        icons=["info-circle", "bar-chart", "tools", "cpu", "clipboard-check", "search"],
         default_index=0,
     )
 
