@@ -368,7 +368,6 @@ def Model_Evaluation():
     }
     
     df = pd.DataFrame(data)
-    st.subheader("Hasil Evaluasi Model")
     st.table(df)
 
 def Prediction():
