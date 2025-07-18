@@ -91,11 +91,13 @@ def Preprocessing():
             5. Output Masking (RGBA) <br>
     """)
     st.subheader("Arsitektur U2-Net")
+    rembg1 = Image.open("Images/u2netarch.png").resize((600, 400))
+    rembg2 = Image.open("Images/RSU.png").resize((600, 400))
     col1, col2 = st.columns(2)
     with col1:
-        st.image("Images/u2netarch.png", caption="Arsitektur U2-Net", use_container_width=True)
+        st.image(rembg1, caption="Arsitektur U2-Net", use_container_width=True)
     with col2:
-        st.image("Images/RSU.png", caption="Komponen Decoder-Encoder", use_container_width=True)
+        st.image(rembg2, caption="Komponen Decoder-Encoder", use_container_width=True)
     st.markdown("## Hasil")
     st.image("Images/bgremoved.png", caption="Background Removed")
     
