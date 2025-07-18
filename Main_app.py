@@ -521,7 +521,7 @@ with st.sidebar:
             "Prediction",
             "About Us"
         ],
-        icons=["info-circle", "bar-chart", "tools", "cpu", "clipboard-check", "search", "fa-info"],
+        icons=["info-circle", "bar-chart", "tools", "cpu", "clipboard-check", "search", "fa-solid fa-info"],
         default_index=0,
     )
 
