@@ -111,7 +111,6 @@ def Introduction():
 def Dataset_Information():
     st.markdown("# Informasi Dataset")
     st.divider()
-    st.divider()
     st.write("""
              Dataset yang digunakan merupakan data primer yang diperoleh melalui pemotretan langsung menggunakan kamera ponsel  dalam jarak 11.5 cm dari object 
              dengan tingkat zoom maksimal dalam kondisi pencahayaan luar ruangan pada siang hari. Proses pengumpulan data dilakukan mulai dari tanggal 1 November 2024 
