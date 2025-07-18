@@ -34,11 +34,11 @@ def Introduction():
     """)
 
     st.header("Tujuan dan Manfaat Penelitian") 
-    st.markdown("## - Tujuan Penelitian")
+    st.subheader("Tujuan Penelitian")
     st.write("""
             Mengetahui tingkat Accuracy, Precision, recall dan F1-Score dari model DenseNet-201 yang berbasis Transfer Learning dan Non-Transfer Learning dalam mengklasifikasikan varietas beras
     """)
-    st.markdown("## - Manfaat Penelitian")
+    st.subheader("Manfaat Penelitian")
     st.write("""
             Manfaat dari penelitian ini adalah memberikan kontribusi dalam pengembangan ilmu pengetahuan, khususnya di bidang teknologi pangan dan image classification, 
             dan menghasilkan sistem klasifikasi yang akurat untuk mengidentifikasi varietas beras yang dapat digunakan sebagai solusi inovatif untuk mengatasi keterbatasan metode manual 
