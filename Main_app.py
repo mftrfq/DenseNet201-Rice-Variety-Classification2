@@ -124,7 +124,9 @@ def Model_Training():
         - Batch size: 32
         - Epoch: 30
     """)
+    st.subheader("Arsitektur DenseNet-201")
     st.image("Images/densenet201arch.png", caption = "Arsitektur DenseNet-201")
+    st.markdown("### DenseNet-201 Layers"
     data = {
         "Layers": [
             "Input",
@@ -177,14 +179,9 @@ def Model_Training():
             "1920",
             "1000"
         ]
-    }
-    
+    }  
     df = pd.DataFrame(data)
-    
-    # Tampilkan Tabel
-    st.subheader("Arsitektur DenseNet-201")
     st.table(df)
-
 
 def Model_Evaluation():
     st.markdown("# Model Evaluation 📊")
