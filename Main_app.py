@@ -61,31 +61,31 @@ def Introduction():
     st.markdown("---")
     
     st.header("Rumusan Masalah")
-    st.markdown("#### -- Permasalahan")
+    st.markdown("#### - Permasalahan")
     st.write("""
             Perbedaan karakteristik visual biji beras sering kali menjadi tantangan utama dalam mengklasifikasikan varietas beras secara akurat. 
             Variasi dalam bentuk, ukuran, tekstur, dan warna biji beras sering kali sangat kecil sehingga sulit dibedakan oleh metode konvensional berbasis pengamatan manual. 
             Dengan demikian, diperlukan pendekatan berbasis teknologi kecerdasan buatan yang mampu mengenali pola-pola visual kompleks pada data citra beras dalam jumlah besar 
             sekaligus dapat mengklasifikasi secara otomatis dan memberikan hasil klasifikasi dengan akurasi yang tinggi
     """)
-    st.markdown("#### -- Solusi Permasalahan")
+    st.markdown("#### - Solusi Permasalahan")
     st.write("""
             Dalam mengatasi permasalahan yang telah disebutkan di atas, solusi yang diusulkan dalam penelitian ini adalah dengan mengimplementasikan metode Deep learning berbasis Transfer Learning 
             yaitu dengan arsitektur DenseNet-201 untuk mengklasifikasikan varietas beras secara akurat. Dengan pendekatan ini, diharapkan dapat dihasilkan model klasifikasi yang efektif 
             dalam mendeteksi varietas beras secara optimal sehingga dapat mencegah pemalsuan atau pencampuran varietas beras serta mendukung stabilitas, pengelolaan dan distribusi beras yang lebih efisien
     """)
-    st.markdown("#### -- Pertanyaan Penelitian")
+    st.markdown("#### - Pertanyaan Penelitian")
     st.write("""
             Bagaimana tingkat Accuracy, Precision, Recall, dan F1-Score dari model DenseNet-201 berbasis Transfer Learning dibandingkan dengan Non-Transfer Learning dalam mengklasifikasikan varietas beras?
     """)
     st.markdown("---")
 
     st.header("Tujuan dan Manfaat Penelitian") 
-    st.markdown("#### -- Tujuan Penelitian")
+    st.markdown("#### - Tujuan Penelitian")
     st.write("""
             Mengetahui tingkat Accuracy, Precision, recall dan F1-Score dari model DenseNet-201 yang berbasis Transfer Learning dan Non-Transfer Learning dalam mengklasifikasikan varietas beras
     """)
-    st.markdown("#### -- Manfaat Penelitian")
+    st.markdown("#### - Manfaat Penelitian")
     st.write("""
             Manfaat dari penelitian ini adalah memberikan kontribusi dalam pengembangan ilmu pengetahuan, khususnya di bidang teknologi pangan dan image classification, 
             dan menghasilkan sistem klasifikasi yang akurat untuk mengidentifikasi varietas beras yang dapat digunakan sebagai solusi inovatif untuk mengatasi keterbatasan metode manual 
