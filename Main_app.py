@@ -295,7 +295,8 @@ def Model_Evaluation():
 def Prediction():
     st.header("Prediction")
     with st.sidebar:
-        img_source = st.radio("Image Source", ("Upload image", "Sample image"))
+        st.sidebar.header("Select Image Source")
+        img_source = st.radio("Upload image", "Sample image")
 
     sample_images = {
         "Ciherang": [
@@ -316,8 +317,8 @@ def Prediction():
     }
 
     if img_source == "Sample image":
-        st.sidebar.header("Pilih kelas")
-        selected_class = st.sidebar.selectbox("Varietas Padi", list(sample_images.keys()))
+        st.sidebar.header("Select Class")
+        selected_class = st.sidebar.selectbox("Rice Variety", list(sample_images.keys()))
         st.markdown(f"#### {selected_class} Samples")
         columns = st.columns(3)
         selected_image = None
