@@ -126,7 +126,7 @@ def Model_Training():
     """)
     st.subheader("Arsitektur DenseNet-201")
     st.image("Images/densenet201arch.png", caption = "Arsitektur DenseNet-201")
-    st.markdown("### DenseNet-201 Layers"
+    st.markdown("### DenseNet-201 Layers")
     data = {
         "Layers": [
             "Input",
