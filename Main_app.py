@@ -497,7 +497,7 @@ def Prediction():
             except Exception as e:
                 st.error("Gagal memproses gambar.")
                 st.error(str(e))
-def about_us():
+def About_us():
     st.header("Penelitian")
     st.subheader("Klasifikasi Varietas Beras Menggunakan Transfer Learning dengan Arsitektur DenseNet-201")
     st.markdown("#### Peneliti:")
@@ -519,7 +519,8 @@ with st.sidebar:
             "Preprocessing", 
             "Model Training", 
             "Model Evaluation", 
-            "Prediction"
+            "Prediction",
+            "About Us"
         ],
         icons=["info-circle", "bar-chart", "tools", "cpu", "clipboard-check", "search"],
         default_index=0,
@@ -534,6 +535,7 @@ page_names_to_funcs = {
     "Model Training": Model_Training,
     "Model Evaluation": Model_Evaluation,
     "Prediction": Prediction,
+    "About Us": About_us
 }
 
 page_names_to_funcs[selected]()
