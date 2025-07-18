@@ -58,9 +58,10 @@ def Introduction():
             4.	Algoritma yang digunakan dalam penelitian ini adalah pre-trained model DenseNet-201.
     """)
             
-
     st.header("Metodologi")
-    st.image("Images/arsitektursistem.png", caption="Arsitektur sistem")
+    left_co, cent_co,last_co = st.columns(3)
+    with cent_co:
+        st.image("Images/arsitektursistem.png", caption="Arsitektur sistem")
 
 def Dataset_Information():
     st.markdown("# Informasi Dataset")
@@ -71,7 +72,7 @@ def Dataset_Information():
              di mana masing-masing kelas terdiri dari 2.000  data dengan resolusi 3024×3024.
              
     """)
-    st.markdown("## Sampel Data")
+    st.markdown("### Sampel Data")
     col1, col2, col3 = st.columns(3)
     with col1:
         st.image("Images/Ciherang.jpg", caption="Varietas Ciherang", use_container_width=True)
