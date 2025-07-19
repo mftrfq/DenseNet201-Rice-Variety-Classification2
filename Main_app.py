@@ -106,7 +106,7 @@ def Introduction():
     st.header("Metodologi")
     left_co, cent_co,last_co = st.columns(3)
     with cent_co:
-        st.image("Images/arsitektursistem.png", caption="Arsitektur sistem")
+        st.image("Images/systemarch.png", caption="Arsitektur sistem")
 
 def Dataset_Information():
     st.markdown("# Informasi Dataset")
