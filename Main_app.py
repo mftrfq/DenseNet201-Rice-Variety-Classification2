@@ -390,12 +390,13 @@ def Prediction():
         img_source = st.radio("Image Source", ["Upload image", "Sample image"])
 
     if img_source == "Sample image":
-        st.markdown("### Pilih Salah Satu Sampel")
+        st.markdown("#### Pilih Salah Satu Sampel")
     
         sample_display = {
             "Ciherang": r'Images/sampel ciherang_1.png',
             "IR64": r'Images/sampel ir64_1.png',
-            "Mentik": r'Images/sampel mentik_1.png'
+            "Mentik": r'Images/sampel mentik_1.png',
+            "Kumpulan Beras": r'Images/multiple grain.jpg'
         }
     
         selected_image = None
@@ -404,7 +405,7 @@ def Prediction():
             with cols[i]:
                 image = Image.open(path)
                 st.image(image, caption=varietas, use_container_width=True)
-                if st.button(f"Gunakan {varietas}", key=path):
+                if st.button(f"Pilih {varietas}", key=path):
                     selected_image = path
     
         if selected_image:
