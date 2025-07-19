@@ -735,51 +735,88 @@ def Prediction():
                     st.error("Objek tidak terdeteksi setelah proses cropping.")
 
             # === 5. MULTIPLE GRAIN ===
-            else:
-                st.info("HASIL PREDIKSI MULTIPLE GRAIN")
-                draw_img = cv2.cvtColor(np.array(image), cv2.COLOR_RGB2BGR)
-                variety_counter = Counter()
+            # else:
+            #     st.info("HASIL PREDIKSI MULTIPLE GRAIN")
+            #     draw_img = cv2.cvtColor(np.array(image), cv2.COLOR_RGB2BGR)
+            #     variety_counter = Counter()
 
-                for i in range(1, num_labels):
-                    x, y, w, h, area = stats[i]
-                    cx, cy = centroids[i]
-                    if area < 500:
-                        continue
+            #     for i in range(1, num_labels):
+            #         x, y, w, h, area = stats[i]
+            #         cx, cy = centroids[i]
+            #         if area < 500:
+            #             continue
 
-                    side = int(max(w, h) * 1.5)
-                    cx_int, cy_int = int(cx), int(cy)
-                    x1 = max(0, cx_int - side // 2)
-                    y1 = max(0, cy_int - side // 2)
-                    side = min(side, min(img_np.shape[1] - x1, img_np.shape[0] - y1))
+            #         side = int(max(w, h) * 1.5)
+            #         cx_int, cy_int = int(cx), int(cy)
+            #         x1 = max(0, cx_int - side // 2)
+            #         y1 = max(0, cy_int - side // 2)
+            #         side = min(side, min(img_np.shape[1] - x1, img_np.shape[0] - y1))
 
-                    crop = img_np[y1:y1 + side, x1:x1 + side]
+            #         crop = img_np[y1:y1 + side, x1:x1 + side]
                     
-                    # === Grayscale lalu ke RGB lagi ===
-                    crop_gray = cv2.cvtColor(crop, cv2.COLOR_RGB2GRAY)
-                    crop_rgb = cv2.cvtColor(crop_gray, cv2.COLOR_GRAY2RGB)
+            #         # === Grayscale lalu ke RGB lagi ===
+            #         crop_gray = cv2.cvtColor(crop, cv2.COLOR_RGB2GRAY)
+            #         crop_rgb = cv2.cvtColor(crop_gray, cv2.COLOR_GRAY2RGB)
 
-                    resized = cv2.resize(crop_rgb, (224, 224))
-                    x_input = tf.expand_dims(resized / 255.0, axis=0)
+            #         resized = cv2.resize(crop_rgb, (224, 224))
+            #         x_input = tf.expand_dims(resized / 255.0, axis=0)
 
-                    pred = model.predict(x_input, verbose=0)
-                    score = tf.nn.softmax(pred[0])
-                    label = class_names[np.argmax(score)]
-                    color = label_colors.get(label, (0, 255, 255))
+            #         pred = model.predict(x_input, verbose=0)
+            #         score = tf.nn.softmax(pred[0])
+            #         label = class_names[np.argmax(score)]
+            #         color = label_colors.get(label, (0, 255, 255))
 
-                    # Visualisasi di atas gambar asli
-                    cv2.rectangle(draw_img, (x1, y1), (x1 + side, y1 + side), color, 2)
-                    cv2.putText(draw_img, label, (x1, y1 - 10), cv2.FONT_HERSHEY_SIMPLEX,
-                                fontScale=1.2, color=color, thickness=2)
-                    variety_counter[label] += 1
+            #         # Visualisasi di atas gambar asli
+            #         cv2.rectangle(draw_img, (x1, y1), (x1 + side, y1 + side), color, 2)
+            #         cv2.putText(draw_img, label, (x1, y1 - 10), cv2.FONT_HERSHEY_SIMPLEX,
+            #                     fontScale=1.2, color=color, thickness=2)
+            #         variety_counter[label] += 1
 
-                st.image(cv2.cvtColor(draw_img, cv2.COLOR_BGR2RGB), caption="Hasil Prediksi", use_container_width=True)
-                st.header("🔎 RINGKASAN")
-                st.markdown(f"Jumlah beras teridentifikasi: {sum(variety_counter.values())}")
-                for variety, total in variety_counter.items():
-                    st.markdown(f"{variety.upper()}: {total} biji")
+            #     st.image(cv2.cvtColor(draw_img, cv2.COLOR_BGR2RGB), caption="Hasil Prediksi", use_container_width=True)
+            #     st.header("🔎 RINGKASAN")
+            #     st.markdown(f"Jumlah beras teridentifikasi: {sum(variety_counter.values())}")
+            #     for variety, total in variety_counter.items():
+            #         st.markdown(f"{variety.upper()}: {total} biji")
+             else:
+                    st.info("HASIL PREDIKSI")
+                    draw_img = cv2.cvtColor(np.array(image), cv2.COLOR_RGB2BGR)
+                    variety_counter = Counter()
+
+                    for i in range(1, num_labels):
+                        x, y, w, h, area = stats[i]
+                        cx, cy = centroids[i]
+                        if area < 500:
+                            continue
+
+                        side = int(max(w, h) * 1.5)
+                        cx_int, cy_int = int(cx), int(cy)
+                        x1 = max(0, cx_int - side // 2)
+                        y1 = max(0, cy_int - side // 2)
+                        side = min(side, min(img_np.shape[1] - x1, img_np.shape[0] - y1))
+
+                        crop = img_np[y1:y1 + side, x1:x1 + side]
+                        resized = cv2.resize(crop, (224, 224))
+                        x_input = tf.expand_dims(resized / 255.0, axis=0)
+
+                        pred = model.predict(x_input, verbose=0)
+                        score = tf.nn.softmax(pred[0])
+                        label = class_names[np.argmax(score)]
+                        color = label_colors.get(label, (0, 255, 255))
+
+                        cv2.rectangle(draw_img, (x1, y1), (x1 + side, y1 + side), color, 2)
+                        cv2.putText(draw_img, label, (x1, y1 - 10), cv2.FONT_HERSHEY_SIMPLEX,
+                                    fontScale=1.2, color=color, thickness=2)
+                        variety_counter[label] += 1
+
+                    st.image(cv2.cvtColor(draw_img, cv2.COLOR_BGR2RGB), caption="Hasil Prediksi", use_container_width=True)
+                    st.header("🔎 RINGKASAN")
+                    st.markdown(f"Jumlah beras teridentifikasi: {sum(variety_counter.values())}")
+                    for variety, total in variety_counter.items():
+                        st.markdown(f"{variety.upper()}: {total} biji")
 
         except Exception as e:
             st.error(f"Terjadi kesalahan: {str(e)}")
+
 
 
 # def Prediction():
