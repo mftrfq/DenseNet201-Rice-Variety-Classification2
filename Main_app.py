@@ -602,7 +602,7 @@ def Prediction():
             "Ciherang": r'Images/sampel ciherang_1.png',
             "IR64": r'Images/sampel ir64_1.png',
             "Mentik": r'Images/sampel mentik_1.png',
-            "Kumpulan Beras": r'Images/multiple grain.jpg'
+            "Kumpulan": r'Images/multiple grain.jpg'
         }
 
         selected_image = None
@@ -611,7 +611,7 @@ def Prediction():
             with cols[i]:
                 image = Image.open(path)
                 st.image(image, caption=varietas, use_container_width=True)
-                if st.button(f"Select"):
+                if st.button(f"Select {varietas}", key=path):
                     selected_image = path
 
         if selected_image:
