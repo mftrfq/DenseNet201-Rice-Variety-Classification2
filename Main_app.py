@@ -389,48 +389,36 @@ def Prediction():
         st.sidebar.header("Select Image Source")
         img_source = st.radio("Image Source", ["Upload image", "Sample image"])
 
-    sample_images = {
-        "Ciherang": [
-            r'Images/sampel ciherang_1.png',
-            r'Images/sampel ciherang_2.png',
-            r'Images/sampel ciherang_3.png'
-        ],
-        "IR64": [
-            r'Images/sampel ir64_1.png',
-            r'Images/sampel ir64_2.png',
-            r'Images/sampel ir64_3.png'
-        ],
-        "Mentik": [
-            r'Images/sampel mentik_1.png',
-            r'Images/sampel mentik_2.png',
-            r'Images/sampel mentik_3.png'
-        ]
-    }
-
     if img_source == "Sample image":
-        st.sidebar.header("Select Class")
-        selected_class = st.sidebar.selectbox("Rice Variety", list(sample_images.keys()))
-        st.markdown(f"#### {selected_class} Samples")
-        columns = st.columns(3)
+        st.markdown("### Pilih Salah Satu Sampel")
+    
+        sample_display = {
+            "Ciherang": r'Images/sampel ciherang_1.png',
+            "IR64": r'Images/sampel ir64_1.png',
+            "Mentik": r'Images/sampel mentik_1.png'
+        }
+    
         selected_image = None
-        for i, image_path in enumerate(sample_images[selected_class]):
-            with columns[i % 3]:
-                image = Image.open(image_path)
-                st.image(image, caption=f"Sample {i + 1}", use_container_width=True)
-                if st.button(f"Gunakan Sample {i + 1}", key=image_path):
-                    selected_image = image_path
-
+        cols = st.columns(len(sample_display))
+        for i, (varietas, path) in enumerate(sample_display.items()):
+            with cols[i]:
+                image = Image.open(path)
+                st.image(image, caption=varietas, use_container_width=True)
+                if st.button(f"Gunakan {varietas}", key=path):
+                    selected_image = path
+    
         if selected_image:
             image = Image.open(selected_image).convert('RGB')
-            st.image(image, caption=selected_image, use_container_width=True)
+            st.image(image, caption="Gambar Sampel Dipilih", use_container_width=True)
             predictions = import_and_predict(image, model)
             confidence = np.max(predictions) * 100
             pred_class = class_names[np.argmax(predictions)]
-            st.header("🔎HASIL")
+            st.header("🔎 HASIL")
             st.warning(f"Varietas: {pred_class.upper()}")
             st.info(f"Confidence: {confidence:.2f}%")
         else:
-            st.info("Pilih salah satu sample untuk prediksi")
+            st.info("Pilih salah satu sampel untuk prediksi")
+
 
     else:
         file = st.file_uploader("Upload gambar...", type=["jpg", "png", "jpeg"])
