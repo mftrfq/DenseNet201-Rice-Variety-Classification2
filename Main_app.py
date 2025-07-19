@@ -449,11 +449,15 @@ def Prediction():
                     if area >= 300:
                         object_count += 1
 
+                # if object_count <= 1:
+                #     predictions = import_and_predict(image, model)
                 if object_count <= 1:
-                    predictions = import_and_predict(image, model)
+                    output_bytes = remove(file_bytes)
+                    img_no_bg = Image.open(BytesIO(output_bytes)).convert("RGB")
+                    predictions = import_and_predict(img_no_bg, model)
                     confidence = np.max(predictions) * 100
                     pred_class = class_names[np.argmax(predictions)]
-
+                
                     st.header("🔎 HASIL")
                     st.warning(f"Varietas: {pred_class.upper()}")
                     st.info(f"Confidence: {confidence:.2f}%")
