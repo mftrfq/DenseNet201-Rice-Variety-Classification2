@@ -601,98 +601,98 @@ def Model_Evaluation():
 
 #             st.image(img_rgb, caption="Deteksi Multiple Grain", use_column_width=True)
 
-def Prediction():
-    st.subheader("Prediction")
+# def Prediction():
+#     st.subheader("Prediction")
 
-    uploaded_file = st.file_uploader("Upload Image", type=["jpg", "jpeg", "png"])
-    if uploaded_file is not None:
-        image = Image.open(uploaded_file).convert("RGBA")
-        img_np = np.array(image)
+#     uploaded_file = st.file_uploader("Upload Image", type=["jpg", "jpeg", "png"])
+#     if uploaded_file is not None:
+#         image = Image.open(uploaded_file).convert("RGBA")
+#         img_np = np.array(image)
 
-        # Background removal
-        removed = remove(img_np)
-        removed_rgb = cv2.cvtColor(removed, cv2.COLOR_RGBA2RGB)
+#         # Background removal
+#         removed = remove(img_np)
+#         removed_rgb = cv2.cvtColor(removed, cv2.COLOR_RGBA2RGB)
 
-        # Grayscale
-        gray = cv2.cvtColor(removed_rgb, cv2.COLOR_RGB2GRAY)
+#         # Grayscale
+#         gray = cv2.cvtColor(removed_rgb, cv2.COLOR_RGB2GRAY)
 
-        # Threshold
-        _, binary = cv2.threshold(gray, 10, 255, cv2.THRESH_BINARY)
+#         # Threshold
+#         _, binary = cv2.threshold(gray, 10, 255, cv2.THRESH_BINARY)
 
-        # Connected Components
-        num_labels, labels, stats, centroids = cv2.connectedComponentsWithStats(binary, connectivity=8)
+#         # Connected Components
+#         num_labels, labels, stats, centroids = cv2.connectedComponentsWithStats(binary, connectivity=8)
 
-        min_area = 500
-        valid_components = [i for i in range(1, num_labels) if stats[i, cv2.CC_STAT_AREA] > min_area]
+#         min_area = 500
+#         valid_components = [i for i in range(1, num_labels) if stats[i, cv2.CC_STAT_AREA] > min_area]
 
-        # Single Grain
-        if len(valid_components) == 1:
-            st.info("🔍 Terdeteksi sebagai **Single Grain**")
-            i = valid_components[0]
-            x, y, w, h = stats[i, cv2.CC_STAT_LEFT], stats[i, cv2.CC_STAT_TOP], \
-                         stats[i, cv2.CC_STAT_WIDTH], stats[i, cv2.CC_STAT_HEIGHT]
+#         # Single Grain
+#         if len(valid_components) == 1:
+#             st.info("🔍 Terdeteksi sebagai **Single Grain**")
+#             i = valid_components[0]
+#             x, y, w, h = stats[i, cv2.CC_STAT_LEFT], stats[i, cv2.CC_STAT_TOP], \
+#                          stats[i, cv2.CC_STAT_WIDTH], stats[i, cv2.CC_STAT_HEIGHT]
 
-            # Buat crop kotak (square box)
-            size = max(w, h)
-            center_x, center_y = x + w // 2, y + h // 2
-            half = size // 2
-            x1 = max(center_x - half, 0)
-            y1 = max(center_y - half, 0)
-            x2 = min(center_x + half, gray.shape[1])
-            y2 = min(center_y + half, gray.shape[0])
+#             # Buat crop kotak (square box)
+#             size = max(w, h)
+#             center_x, center_y = x + w // 2, y + h // 2
+#             half = size // 2
+#             x1 = max(center_x - half, 0)
+#             y1 = max(center_y - half, 0)
+#             x2 = min(center_x + half, gray.shape[1])
+#             y2 = min(center_y + half, gray.shape[0])
 
-            crop = gray[y1:y2, x1:x2]
-            resized = cv2.resize(crop, (224, 224))
-            rgb = cv2.cvtColor(resized, cv2.COLOR_GRAY2RGB)
-            normalized = rgb / 255.0
-            input_tensor = np.expand_dims(normalized, axis=0)
+#             crop = gray[y1:y2, x1:x2]
+#             resized = cv2.resize(crop, (224, 224))
+#             rgb = cv2.cvtColor(resized, cv2.COLOR_GRAY2RGB)
+#             normalized = rgb / 255.0
+#             input_tensor = np.expand_dims(normalized, axis=0)
 
-            pred = model.predict(input_tensor)
-            class_idx = np.argmax(pred)
-            confidence = pred[0][class_idx]
-            label = class_names[class_idx]
+#             pred = model.predict(input_tensor)
+#             class_idx = np.argmax(pred)
+#             confidence = pred[0][class_idx]
+#             label = class_names[class_idx]
 
-            st.image(crop, caption="Cropped Single Grain (Grayscale)", use_column_width=True)
-            st.success(f"Predicted Class: {label} ({confidence:.2%})")
+#             st.image(crop, caption="Cropped Single Grain (Grayscale)", use_column_width=True)
+#             st.success(f"Predicted Class: {label} ({confidence:.2%})")
 
-        elif len(valid_components) > 1:
-            st.info("🔍 Terdeteksi sebagai **Multiple Grain**")
+#         elif len(valid_components) > 1:
+#             st.info("🔍 Terdeteksi sebagai **Multiple Grain**")
 
-            img_copy = removed_rgb.copy()
+#             img_copy = removed_rgb.copy()
 
-            for i in valid_components:
-                x, y, w, h = stats[i, cv2.CC_STAT_LEFT], stats[i, cv2.CC_STAT_TOP], \
-                             stats[i, cv2.CC_STAT_WIDTH], stats[i, cv2.CC_STAT_HEIGHT]
+#             for i in valid_components:
+#                 x, y, w, h = stats[i, cv2.CC_STAT_LEFT], stats[i, cv2.CC_STAT_TOP], \
+#                              stats[i, cv2.CC_STAT_WIDTH], stats[i, cv2.CC_STAT_HEIGHT]
 
-                # Buat crop kotak (square box)
-                size = max(w, h)
-                center_x, center_y = x + w // 2, y + h // 2
-                half = size // 2
-                x1 = max(center_x - half, 0)
-                y1 = max(center_y - half, 0)
-                x2 = min(center_x + half, gray.shape[1])
-                y2 = min(center_y + half, gray.shape[0])
+#                 # Buat crop kotak (square box)
+#                 size = max(w, h)
+#                 center_x, center_y = x + w // 2, y + h // 2
+#                 half = size // 2
+#                 x1 = max(center_x - half, 0)
+#                 y1 = max(center_y - half, 0)
+#                 x2 = min(center_x + half, gray.shape[1])
+#                 y2 = min(center_y + half, gray.shape[0])
 
-                crop = gray[y1:y2, x1:x2]
-                resized = cv2.resize(crop, (224, 224))
-                rgb = cv2.cvtColor(resized, cv2.COLOR_GRAY2RGB)
-                normalized = rgb / 255.0
-                input_tensor = np.expand_dims(normalized, axis=0)
+#                 crop = gray[y1:y2, x1:x2]
+#                 resized = cv2.resize(crop, (224, 224))
+#                 rgb = cv2.cvtColor(resized, cv2.COLOR_GRAY2RGB)
+#                 normalized = rgb / 255.0
+#                 input_tensor = np.expand_dims(normalized, axis=0)
 
-                pred = model.predict(input_tensor)
-                class_idx = np.argmax(pred)
-                confidence = pred[0][class_idx]
-                label = class_names[class_idx]
+#                 pred = model.predict(input_tensor)
+#                 class_idx = np.argmax(pred)
+#                 confidence = pred[0][class_idx]
+#                 label = class_names[class_idx]
 
-                # Gambar kotak dan label
-                cv2.rectangle(img_copy, (x1, y1), (x2, y2), (0, 255, 0), 2)
-                cv2.putText(img_copy, f"{label} ({confidence:.2%})", (x1, y1 - 5),
-                            cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 1)
+#                 # Gambar kotak dan label
+#                 cv2.rectangle(img_copy, (x1, y1), (x2, y2), (0, 255, 0), 2)
+#                 cv2.putText(img_copy, f"{label} ({confidence:.2%})", (x1, y1 - 5),
+#                             cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 1)
 
-            st.image(img_copy, caption="Multiple Grain Detection with Bounding Boxes", use_column_width=True)
+#             st.image(img_copy, caption="Multiple Grain Detection with Bounding Boxes", use_column_width=True)
 
-        else:
-            st.warning("❌ Tidak ada objek valid terdeteksi.")
+#         else:
+#             st.warning("❌ Tidak ada objek valid terdeteksi.")
 
 
 def Prediction():
