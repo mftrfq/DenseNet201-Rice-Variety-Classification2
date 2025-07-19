@@ -695,82 +695,229 @@ def Model_Evaluation():
 #             st.warning("❌ Tidak ada objek valid terdeteksi.")
 
 
-def Prediction():
-    st.subheader("Prediction")
+# def Prediction():
+#     st.subheader("Prediction")
 
-    uploaded_file = st.file_uploader("Upload Image", type=["jpg", "jpeg", "png"])
-    if uploaded_file is not None:
-        image = Image.open(uploaded_file).convert("RGBA")
-        img_np = np.array(image)
+#     uploaded_file = st.file_uploader("Upload Image", type=["jpg", "jpeg", "png"])
+#     if uploaded_file is not None:
+#         image = Image.open(uploaded_file).convert("RGBA")
+#         img_np = np.array(image)
 
-        # Step 1: Background removal
-        removed = remove(img_np)
-        removed_rgb = cv2.cvtColor(removed, cv2.COLOR_RGBA2RGB)
+#         # Step 1: Background removal
+#         removed = remove(img_np)
+#         removed_rgb = cv2.cvtColor(removed, cv2.COLOR_RGBA2RGB)
 
-        # Step 2: Convert to grayscale
-        gray = cv2.cvtColor(removed_rgb, cv2.COLOR_RGB2GRAY)
+#         # Step 2: Convert to grayscale
+#         gray = cv2.cvtColor(removed_rgb, cv2.COLOR_RGB2GRAY)
 
-        # Step 3: Thresholding
-        _, binary = cv2.threshold(gray, 10, 255, cv2.THRESH_BINARY)
+#         # Step 3: Thresholding
+#         _, binary = cv2.threshold(gray, 10, 255, cv2.THRESH_BINARY)
 
-        # Step 4: Connected Component Analysis
-        num_labels, labels, stats, centroids = cv2.connectedComponentsWithStats(binary, connectivity=8)
+#         # Step 4: Connected Component Analysis
+#         num_labels, labels, stats, centroids = cv2.connectedComponentsWithStats(binary, connectivity=8)
 
-        # Filter komponen kecil (area < 500)
-        min_area = 500
-        valid_components = [i for i in range(1, num_labels) if stats[i, cv2.CC_STAT_AREA] > min_area]
+#         # Filter komponen kecil (area < 500)
+#         min_area = 500
+#         valid_components = [i for i in range(1, num_labels) if stats[i, cv2.CC_STAT_AREA] > min_area]
 
-        # Deteksi Single vs Multiple
-        if len(valid_components) == 1:
-            st.info("🔍 Terdeteksi sebagai **Single Grain**")
+#         # Deteksi Single vs Multiple
+#         if len(valid_components) == 1:
+#             st.info("🔍 Terdeteksi sebagai **Single Grain**")
 
-            i = valid_components[0]
-            x, y, w, h = stats[i, cv2.CC_STAT_LEFT], stats[i, cv2.CC_STAT_TOP], \
-                         stats[i, cv2.CC_STAT_WIDTH], stats[i, cv2.CC_STAT_HEIGHT]
+#             i = valid_components[0]
+#             x, y, w, h = stats[i, cv2.CC_STAT_LEFT], stats[i, cv2.CC_STAT_TOP], \
+#                          stats[i, cv2.CC_STAT_WIDTH], stats[i, cv2.CC_STAT_HEIGHT]
             
-            crop = gray[y:y+h, x:x+w]
-            resized = cv2.resize(crop, (224, 224))
-            rgb = cv2.cvtColor(resized, cv2.COLOR_GRAY2RGB)
-            normalized = rgb / 255.0
-            input_tensor = np.expand_dims(normalized, axis=0)
+#             crop = gray[y:y+h, x:x+w]
+#             resized = cv2.resize(crop, (224, 224))
+#             rgb = cv2.cvtColor(resized, cv2.COLOR_GRAY2RGB)
+#             normalized = rgb / 255.0
+#             input_tensor = np.expand_dims(normalized, axis=0)
 
-            pred = model.predict(input_tensor)
-            class_idx = np.argmax(pred)
-            confidence = pred[0][class_idx]
-            label = class_names[class_idx]
+#             pred = model.predict(input_tensor)
+#             class_idx = np.argmax(pred)
+#             confidence = pred[0][class_idx]
+#             label = class_names[class_idx]
 
-            st.image(crop, caption="Cropped Single Grain (Grayscale)", use_column_width=True)
-            st.success(f"Predicted Class: {label} ({confidence:.2%})")
+#             st.image(crop, caption="Cropped Single Grain (Grayscale)", use_column_width=True)
+#             st.success(f"Predicted Class: {label} ({confidence:.2%})")
 
-        elif len(valid_components) > 1:
-            st.info("🔍 Terdeteksi sebagai **Multiple Grain**")
+#         elif len(valid_components) > 1:
+#             st.info("🔍 Terdeteksi sebagai **Multiple Grain**")
 
-            img_copy = removed_rgb.copy()
+#             img_copy = removed_rgb.copy()
 
-            for i in valid_components:
-                x, y, w, h = stats[i, cv2.CC_STAT_LEFT], stats[i, cv2.CC_STAT_TOP], \
-                             stats[i, cv2.CC_STAT_WIDTH], stats[i, cv2.CC_STAT_HEIGHT]
+#             for i in valid_components:
+#                 x, y, w, h = stats[i, cv2.CC_STAT_LEFT], stats[i, cv2.CC_STAT_TOP], \
+#                              stats[i, cv2.CC_STAT_WIDTH], stats[i, cv2.CC_STAT_HEIGHT]
                 
-                crop = gray[y:y+h, x:x+w]
-                resized = cv2.resize(crop, (224, 224))
-                rgb = cv2.cvtColor(resized, cv2.COLOR_GRAY2RGB)
-                normalized = rgb / 255.0
-                input_tensor = np.expand_dims(normalized, axis=0)
+#                 crop = gray[y:y+h, x:x+w]
+#                 resized = cv2.resize(crop, (224, 224))
+#                 rgb = cv2.cvtColor(resized, cv2.COLOR_GRAY2RGB)
+#                 normalized = rgb / 255.0
+#                 input_tensor = np.expand_dims(normalized, axis=0)
 
-                pred = model.predict(input_tensor)
-                class_idx = np.argmax(pred)
-                confidence = pred[0][class_idx]
-                label = class_names[class_idx]
+#                 pred = model.predict(input_tensor)
+#                 class_idx = np.argmax(pred)
+#                 confidence = pred[0][class_idx]
+#                 label = class_names[class_idx]
 
-                # Draw rectangle & label
-                cv2.rectangle(img_copy, (x, y), (x + w, y + h), (0, 255, 0), 2)
-                cv2.putText(img_copy, f"{label} ({confidence:.2%})", (x, y - 5),
-                            cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 1)
+#                 # Draw rectangle & label
+#                 cv2.rectangle(img_copy, (x, y), (x + w, y + h), (0, 255, 0), 2)
+#                 cv2.putText(img_copy, f"{label} ({confidence:.2%})", (x, y - 5),
+#                             cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 1)
 
-            st.image(img_copy, caption="Detected Multiple Grains", use_column_width=True)
+#             st.image(img_copy, caption="Detected Multiple Grains", use_column_width=True)
 
+#         else:
+#             st.warning("❌ Tidak ada objek valid terdeteksi.")
+
+def Prediction():
+    st.header("Prediction")
+    st.divider()
+    with st.sidebar:
+        st.sidebar.header("Select Image Source")
+        img_source = st.radio("Image Source", ["Upload image", "Sample image"])
+
+    sample_images = {
+        "Ciherang": [
+            r'Images/sampel ciherang_1.png',
+            r'Images/sampel ciherang_2.png',
+            r'Images/sampel ciherang_3.png'
+        ],
+        "IR64": [
+            r'Images/sampel ir64_1.png',
+            r'Images/sampel ir64_2.png',
+            r'Images/sampel ir64_3.png'
+        ],
+        "Mentik": [
+            r'Images/sampel mentik_1.png',
+            r'Images/sampel mentik_2.png',
+            r'Images/sampel mentik_3.png'
+        ]
+    }
+
+    if img_source == "Sample image":
+        st.sidebar.header("Select Class")
+        selected_class = st.sidebar.selectbox("Rice Variety", list(sample_images.keys()))
+        st.markdown(f"#### {selected_class} Samples")
+        columns = st.columns(3)
+        selected_image = None
+        for i, image_path in enumerate(sample_images[selected_class]):
+            with columns[i % 3]:
+                image = Image.open(image_path)
+                st.image(image, caption=f"Sample {i + 1}", use_container_width=True)
+                if st.button(f"Gunakan Sample {i + 1}", key=image_path):
+                    selected_image = image_path
+
+        if selected_image:
+            image = Image.open(selected_image).convert('RGB')
+            st.image(image, caption=selected_image, use_container_width=True)
+            predictions = import_and_predict(image, model)
+            confidence = np.max(predictions) * 100
+            pred_class = class_names[np.argmax(predictions)]
+            st.header("🔎HASIL")
+            st.warning(f"Varietas: {pred_class.upper()}")
+            st.info(f"Confidence: {confidence:.2f}%")
         else:
-            st.warning("❌ Tidak ada objek valid terdeteksi.")
+            st.info("Pilih salah satu sample untuk prediksi")
+
+    else:
+        file = st.file_uploader("Upload gambar...", type=["jpg", "png", "jpeg"])
+        if file is None:
+            st.info("Silakan upload gambar beras")
+        else:
+            try:
+                file_bytes = file.read()
+                image = Image.open(BytesIO(file_bytes)).convert('RGB')
+                st.image(image, caption="Gambar yang diunggah", use_container_width=True)
+
+                # Remove background
+                output_bytes = remove(file_bytes)
+                img_no_bg = Image.open(BytesIO(output_bytes)).convert("RGB")
+                img_np = np.array(img_no_bg)
+
+                # Deteksi objek
+                gray = cv2.cvtColor(img_np, cv2.COLOR_RGB2GRAY)
+                _, binary = cv2.threshold(gray, 0, 255, cv2.THRESH_BINARY + cv2.THRESH_OTSU)
+                num_labels, labels, stats, centroids = cv2.connectedComponentsWithStats(binary, connectivity=8)
+
+                # Hitung objek besar (area minimal 1000)
+                large_components = sum(1 for i in range(1, num_labels) if stats[i, cv2.CC_STAT_AREA] >= 1000)
+
+                if large_components <= 1:
+                    # === Objek Tunggal ===
+                    gray = cv2.cvtColor(img_np, cv2.COLOR_RGB2GRAY)
+                    _, binary = cv2.threshold(gray, 10, 255, cv2.THRESH_BINARY)
+                    contours, _ = cv2.findContours(binary, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+
+                    if contours:
+                        x, y, w, h = cv2.boundingRect(contours[0])
+                        side = int(max(w, h) * 1.5)
+                        cx = x + w // 2
+                        cy = y + h // 2
+                        x1 = max(0, cx - side // 2)
+                        y1 = max(0, cy - side // 2)
+                        x2 = min(img_np.shape[1], x1 + side)
+                        y2 = min(img_np.shape[0], y1 + side)
+
+                        crop_gray = gray[y1:y2, x1:x2]
+                        crop_rgb = cv2.cvtColor(crop_gray, cv2.COLOR_GRAY2RGB)
+                        resized = cv2.resize(crop_rgb, (224, 224))
+                        x_input = tf.expand_dims(resized / 255.0, axis=0)
+
+                        pred = model.predict(x_input, verbose=0)
+                        score = tf.nn.softmax(pred[0])
+                        label = class_names[np.argmax(score)]
+                        confidence = np.max(score) * 100
+
+                        st.header("🔎 HASIL")
+                        st.warning(f"Varietas: {label.upper()}")
+                        st.info(f"Confidence: {confidence:.2f}%")
+                    else:
+                        st.error("Objek tidak terdeteksi setelah proses cropping.")
+
+                else:
+                    # === Multiple Grain ===
+                    st.info("HASIL PREDIKSI")
+                    draw_img = cv2.cvtColor(np.array(image), cv2.COLOR_RGB2BGR)
+                    variety_counter = Counter()
+
+                    for i in range(1, num_labels):
+                        x, y, w, h, area = stats[i]
+                        cx, cy = centroids[i]
+                        if area < 1000:
+                            continue
+
+                        side = int(max(w, h) * 1.5)
+                        cx_int, cy_int = int(cx), int(cy)
+                        x1 = max(0, cx_int - side // 2)
+                        y1 = max(0, cy_int - side // 2)
+                        side = min(side, min(img_np.shape[1] - x1, img_np.shape[0] - y1))
+
+                        crop = img_np[y1:y1 + side, x1:x1 + side]
+                        resized = cv2.resize(crop, (224, 224))
+                        x_input = tf.expand_dims(resized / 255.0, axis=0)
+
+                        pred = model.predict(x_input, verbose=0)
+                        score = tf.nn.softmax(pred[0])
+                        label = class_names[np.argmax(score)]
+                        color = label_colors.get(label, (0, 255, 255))
+
+                        cv2.rectangle(draw_img, (x1, y1), (x1 + side, y1 + side), color, 2)
+                        cv2.putText(draw_img, label, (x1, y1 - 10), cv2.FONT_HERSHEY_SIMPLEX,
+                                    fontScale=1.2, color=color, thickness=2)
+                        variety_counter[label] += 1
+
+                    st.image(cv2.cvtColor(draw_img, cv2.COLOR_BGR2RGB), caption="Hasil Prediksi", use_container_width=True)
+                    st.header("🔎 RINGKASAN")
+                    st.markdown(f"Jumlah beras teridentifikasi: {sum(variety_counter.values())}")
+                    for variety, total in variety_counter.items():
+                        st.markdown(f"{variety.upper()}: {total} biji")
+
+            except Exception as e:
+                st.error("Gagal memproses gambar.")
+                st.error(str(e))
 
 
 def About_us():
