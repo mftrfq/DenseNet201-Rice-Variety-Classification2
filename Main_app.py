@@ -383,7 +383,7 @@ def Model_Evaluation():
     st.table(df)
 
 def Prediction():
-       st.header("Prediction")
+    st.header("Prediction")
     st.divider()
     with st.sidebar:
         st.sidebar.header("Select Image Source")
