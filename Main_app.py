@@ -451,16 +451,50 @@ def Prediction():
 
                 # if object_count <= 1:
                 #     predictions = import_and_predict(image, model)
+                # if object_count <= 1:
+                #     output_bytes = remove(file_bytes)
+                #     img_no_bg = Image.open(BytesIO(output_bytes)).convert("RGB")
+                #     predictions = import_and_predict(img_no_bg, model)
+                #     confidence = np.max(predictions) * 100
+                #     pred_class = class_names[np.argmax(predictions)]
+                
+                #     st.header("🔎 HASIL")
+                #     st.warning(f"Varietas: {pred_class.upper()}")
+                #     st.info(f"Confidence: {confidence:.2f}%")
                 if object_count <= 1:
                     output_bytes = remove(file_bytes)
                     img_no_bg = Image.open(BytesIO(output_bytes)).convert("RGB")
-                    predictions = import_and_predict(img_no_bg, model)
-                    confidence = np.max(predictions) * 100
-                    pred_class = class_names[np.argmax(predictions)]
+                    img_np = np.array(img_no_bg)
+                    gray = cv2.cvtColor(img_np, cv2.COLOR_RGB2GRAY)
+                    _, binary = cv2.threshold(gray, 10, 255, cv2.THRESH_BINARY)
+                    contours, _ = cv2.findContours(binary, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+            
+                    if contours:
+                        x, y, w, h = cv2.boundingRect(contours[0])
+                        side = int(max(w, h) * 1.5)
+                        cx = x + w // 2
+                        cy = y + h // 2
+                        x1 = max(0, cx - side // 2)
+                        y1 = max(0, cy - side // 2)
+                        x2 = min(img_np.shape[1], x1 + side)
+                        y2 = min(img_np.shape[0], y1 + side)
+                        crop_img = img_np[y1:y2, x1:x2]
+                        
+                        resized = cv2.resize(crop_img, (224, 224))
+                        x_input = tf.expand_dims(resized / 255.0, axis=0)
+    
+                        pred = model.predict(x_input, verbose=0)
+                        score = tf.nn.softmax(pred[0])
+                        label = class_names[np.argmax(score)]
+                        confidence = np.max(score) * 100
                 
-                    st.header("🔎 HASIL")
-                    st.warning(f"Varietas: {pred_class.upper()}")
-                    st.info(f"Confidence: {confidence:.2f}%")
+                        st.header("🔎 HASIL")
+                        st.image(crop_img, caption="Gambar setelah rembg dan cropping", use_container_width=True)
+                        st.warning(f"Varietas: {label.upper()}")
+                        st.info(f"Confidence: {confidence:.2f}%")
+                    else:
+                        st.error("Objek tidak terdeteksi setelah proses cropping.")
+
                 else:
                     # st.info(f"Terdeteksi {object_count} butir beras (multiple grain)")
                     st.info("HASIL PREDIKSI")
