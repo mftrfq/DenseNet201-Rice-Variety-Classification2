@@ -1340,23 +1340,19 @@ def Prediction():
                     variety_counter = Counter()
 
                     for i in range(1, num_labels):
-                        area = stats[i, cv2.CC_STAT_AREA]
+                        x, y, w, h, area = stats[i]
+                        cx, cy = centroids[i]
                         if area < 300:
                             continue
-
-                        x, y, w, h = stats[i, cv2.CC_STAT_LEFT], stats[i, cv2.CC_STAT_TOP], \
-                                     stats[i, cv2.CC_STAT_WIDTH], stats[i, cv2.CC_STAT_HEIGHT]
-
-                        # === SQUARE BOUNDING BOX seperti permintaan kamu
+                    
                         side = int(max(w, h) * 1.5)
-                        cx = x + w // 2
-                        cy = y + h // 2
-                        x1 = max(0, cx - side // 2)
-                        y1 = max(0, cy - side // 2)
-                        x2 = min(img_np.shape[1], x1 + side)
-                        y2 = min(img_np.shape[0], y1 + side)
-
-                        crop = img_np[y1:y2, x1:x2]
+                        cx_int, cy_int = int(cx), int(cy)
+                        x1 = max(0, cx_int - side // 2)
+                        y1 = max(0, cy_int - side // 2)
+                    
+                        side = min(side, min(img_np.shape[1] - x1, img_np.shape[0] - y1))
+                        crop = img_np[y1:y1 + side, x1:x1 + side]
+                    
                         resized = cv2.resize(crop, (224, 224))
                         x_input = tf.expand_dims(resized / 255.0, axis=0)
 
