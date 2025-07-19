@@ -548,11 +548,9 @@ def Prediction():
                 pred = model.predict(x_input, verbose=0)
                 score = tf.nn.softmax(pred[0])
                 label = class_names[np.argmax(score)]
-                confidence = np.max(score) * 100
 
-                st.header("🔎 HASIL")
+                st.markdown("### 🔎 HASIL")
                 st.warning(f"Varietas: {label.upper()}")
-                st.info(f"Confidence: {confidence:.2f}%")
             else:
                 st.error("Objek tidak terdeteksi setelah proses cropping.")
 
@@ -588,7 +586,7 @@ def Prediction():
                 variety_counter[label] += 1
 
             st.image(cv2.cvtColor(draw_img, cv2.COLOR_BGR2RGB), caption="Hasil Prediksi", use_container_width=True)
-            st.header("🔎 RINGKASAN")
+            st.markdown("###🔎 RINGKASAN")
             st.markdown(f"Jumlah beras teridentifikasi: {sum(variety_counter.values())}")
             for variety, total in variety_counter.items():
                 st.markdown(f"{variety.upper()}: {total} biji")
