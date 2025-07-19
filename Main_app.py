@@ -383,7 +383,7 @@ def Model_Evaluation():
     st.table(df)
 
 def Prediction():
-    st.title("📷 Klasifikasi Varietas Padi")
+    st.title("Prediction")
     
     file = st.file_uploader("Upload gambar...", type=["jpg", "png", "jpeg"])
     if file is None:
