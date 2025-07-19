@@ -679,25 +679,6 @@ def Model_Evaluation():
 #                 st.error("Gagal memproses gambar.")
 #                 st.error(str(e))
 
-from rembg import remove
-from PIL import Image
-import numpy as np
-import cv2
-import tensorflow as tf
-import streamlit as st
-from collections import Counter
-from io import BytesIO
-
-# Load model dan class names
-model = tf.keras.models.load_model("model.h5")  # ganti dengan path model Anda
-class_names = ['Ciherang', 'IR64', 'Mentik']    # ganti sesuai label Anda
-
-# Warna kotak tiap label
-label_colors = {
-    'Ciherang': (0, 255, 0),
-    'IR64': (255, 0, 0),
-    'Mentik': (0, 0, 255),
-}
 
 def Prediction():
     st.title("📷 Klasifikasi Varietas Padi")
