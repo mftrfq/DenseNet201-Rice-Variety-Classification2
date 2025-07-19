@@ -611,7 +611,7 @@ def Prediction():
             with cols[i]:
                 image = Image.open(path)
                 st.image(image, caption=varietas, use_container_width=True)
-                if st.button(f"Select):
+                if st.button(f"Select"):
                     selected_image = path
 
         if selected_image:
