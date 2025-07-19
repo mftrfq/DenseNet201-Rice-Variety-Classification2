@@ -493,7 +493,7 @@ def Prediction():
                     st.header("🔎 RINGKASAN")
                     st.markdown(f"Jumlah beras teridentifikasi: {sum(variety_counter.values())}")
                     for variety, total in variety_counter.items():
-                        st.markdown(f"{variety.upper()}: {total} butir")
+                        st.markdown(f"{variety.upper()}: {total} biji")
 
             except Exception as e:
                 st.error("Gagal memproses gambar.")
