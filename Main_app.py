@@ -459,7 +459,7 @@ def Prediction():
                     st.info(f"Confidence: {confidence:.2f}%")
                 else:
                     # st.info(f"Terdeteksi {object_count} butir beras (multiple grain)")
-                    st.info("Hasil Prediksi")
+                    st.info("HASIL PREDIKSI")
                     draw_img = cv2.cvtColor(np.array(image), cv2.COLOR_RGB2BGR)
                     variety_counter = Counter()
 
