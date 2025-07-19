@@ -522,83 +522,162 @@ def Model_Evaluation():
 #             except Exception as e:
 #                 st.error("Gagal memproses gambar.")
 #                 st.error(str(e))
+
+# def Prediction():
+#     st.subheader("Prediction")
+
+#     uploaded_file = st.file_uploader("Upload Image", type=["jpg", "jpeg", "png"])
+#     if uploaded_file is not None:
+#         image = Image.open(uploaded_file)
+#         img_array = np.array(image)
+
+#         # Ubah ke grayscale
+#         gray = cv2.cvtColor(img_array, cv2.COLOR_RGB2GRAY)
+
+#         # Threshold untuk binerisasi
+#         _, binary = cv2.threshold(gray, 10, 255, cv2.THRESH_BINARY)
+#         contours, _ = cv2.findContours(binary, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+
+#         # Hitung kontur dengan filter noise
+#         min_contour_area = 500  # filter kontur kecil (noise)
+#         valid_contours = [cnt for cnt in contours if cv2.contourArea(cnt) > min_contour_area]
+
+#         # Ambil kontur terbesar untuk analisis area
+#         if valid_contours:
+#             max_contour = max(valid_contours, key=cv2.contourArea)
+#             max_area = cv2.contourArea(max_contour)
+#         else:
+#             st.warning("Tidak ada objek valid terdeteksi.")
+#             return
+
+#         img_area = gray.shape[0] * gray.shape[1]
+#         area_ratio = max_area / img_area
+
+#         st.write(f"Area Ratio: {area_ratio:.3f} | Jumlah Kontur Valid: {len(valid_contours)}")
+
+#         if area_ratio > 0.20 and len(valid_contours) == 1:
+#             st.write("🔍 Terdeteksi sebagai **Single Grain**")
+
+#             x, y, w, h = cv2.boundingRect(max_contour)
+#             cropped = gray[y:y+h, x:x+w]
+
+#             # Resize dan konversi ke RGB (setelah cropping)
+#             resized = cv2.resize(cropped, (224, 224))
+#             rgb_img = cv2.cvtColor(resized, cv2.COLOR_GRAY2RGB)
+#             rgb_img = rgb_img / 255.0
+#             rgb_img = np.expand_dims(rgb_img, axis=0)
+
+#             prediction = model.predict(rgb_img)
+#             class_idx = np.argmax(prediction)
+#             class_label = class_names[class_idx]
+#             confidence = prediction[0][class_idx]
+
+#             st.image(cropped, caption="Cropped Grain (Grayscale)", use_column_width=True)
+#             st.success(f"Predicted Class: {class_label} ({confidence:.2%})")
+
+#         else:
+#             st.write("🔍 Terdeteksi sebagai **Multiple Grain**")
+
+#             img_rgb = cv2.cvtColor(gray, cv2.COLOR_GRAY2RGB)
+
+#             for cnt in valid_contours:
+#                 x, y, w, h = cv2.boundingRect(cnt)
+#                 roi = gray[y:y+h, x:x+w]
+
+#                 resized = cv2.resize(roi, (224, 224))
+#                 rgb_roi = cv2.cvtColor(resized, cv2.COLOR_GRAY2RGB)
+#                 rgb_roi = rgb_roi / 255.0
+#                 rgb_roi = np.expand_dims(rgb_roi, axis=0)
+
+#                 prediction = model.predict(rgb_roi)
+#                 class_idx = np.argmax(prediction)
+#                 class_label = class_names[class_idx]
+#                 confidence = prediction[0][class_idx]
+
+#                 # Gambar kotak dan label
+#                 cv2.rectangle(img_rgb, (x, y), (x+w, y+h), (0, 255, 0), 2)
+#                 cv2.putText(img_rgb, f"{class_label} ({confidence:.2%})", (x, y-10),
+#                 cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 1)
+
+#             st.image(img_rgb, caption="Deteksi Multiple Grain", use_column_width=True)
+
 def Prediction():
     st.subheader("Prediction")
 
     uploaded_file = st.file_uploader("Upload Image", type=["jpg", "jpeg", "png"])
     if uploaded_file is not None:
-        image = Image.open(uploaded_file)
-        img_array = np.array(image)
+        image = Image.open(uploaded_file).convert("RGBA")
+        img_np = np.array(image)
 
-        # Ubah ke grayscale
-        gray = cv2.cvtColor(img_array, cv2.COLOR_RGB2GRAY)
+        # Step 1: Background removal
+        removed = remove(img_np)
+        removed_rgb = cv2.cvtColor(removed, cv2.COLOR_RGBA2RGB)
 
-        # Threshold untuk binerisasi
+        # Step 2: Convert to grayscale
+        gray = cv2.cvtColor(removed_rgb, cv2.COLOR_RGB2GRAY)
+
+        # Step 3: Thresholding
         _, binary = cv2.threshold(gray, 10, 255, cv2.THRESH_BINARY)
-        contours, _ = cv2.findContours(binary, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
 
-        # Hitung kontur dengan filter noise
-        min_contour_area = 500  # filter kontur kecil (noise)
-        valid_contours = [cnt for cnt in contours if cv2.contourArea(cnt) > min_contour_area]
+        # Step 4: Connected Component Analysis
+        num_labels, labels, stats, centroids = cv2.connectedComponentsWithStats(binary, connectivity=8)
 
-        # Ambil kontur terbesar untuk analisis area
-        if valid_contours:
-            max_contour = max(valid_contours, key=cv2.contourArea)
-            max_area = cv2.contourArea(max_contour)
+        # Filter komponen kecil (area < 500)
+        min_area = 500
+        valid_components = [i for i in range(1, num_labels) if stats[i, cv2.CC_STAT_AREA] > min_area]
+
+        # Deteksi Single vs Multiple
+        if len(valid_components) == 1:
+            st.info("🔍 Terdeteksi sebagai **Single Grain**")
+
+            i = valid_components[0]
+            x, y, w, h = stats[i, cv2.CC_STAT_LEFT], stats[i, cv2.CC_STAT_TOP], \
+                         stats[i, cv2.CC_STAT_WIDTH], stats[i, cv2.CC_STAT_HEIGHT]
+            
+            crop = gray[y:y+h, x:x+w]
+            resized = cv2.resize(crop, (224, 224))
+            rgb = cv2.cvtColor(resized, cv2.COLOR_GRAY2RGB)
+            normalized = rgb / 255.0
+            input_tensor = np.expand_dims(normalized, axis=0)
+
+            pred = model.predict(input_tensor)
+            class_idx = np.argmax(pred)
+            confidence = pred[0][class_idx]
+            label = class_names[class_idx]
+
+            st.image(crop, caption="Cropped Single Grain (Grayscale)", use_column_width=True)
+            st.success(f"Predicted Class: {label} ({confidence:.2%})")
+
+        elif len(valid_components) > 1:
+            st.info("🔍 Terdeteksi sebagai **Multiple Grain**")
+
+            img_copy = removed_rgb.copy()
+
+            for i in valid_components:
+                x, y, w, h = stats[i, cv2.CC_STAT_LEFT], stats[i, cv2.CC_STAT_TOP], \
+                             stats[i, cv2.CC_STAT_WIDTH], stats[i, cv2.CC_STAT_HEIGHT]
+                
+                crop = gray[y:y+h, x:x+w]
+                resized = cv2.resize(crop, (224, 224))
+                rgb = cv2.cvtColor(resized, cv2.COLOR_GRAY2RGB)
+                normalized = rgb / 255.0
+                input_tensor = np.expand_dims(normalized, axis=0)
+
+                pred = model.predict(input_tensor)
+                class_idx = np.argmax(pred)
+                confidence = pred[0][class_idx]
+                label = class_names[class_idx]
+
+                # Draw rectangle & label
+                cv2.rectangle(img_copy, (x, y), (x + w, y + h), (0, 255, 0), 2)
+                cv2.putText(img_copy, f"{label} ({confidence:.2%})", (x, y - 5),
+                            cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 1)
+
+            st.image(img_copy, caption="Detected Multiple Grains", use_column_width=True)
+
         else:
-            st.warning("Tidak ada objek valid terdeteksi.")
-            return
+            st.warning("❌ Tidak ada objek valid terdeteksi.")
 
-        img_area = gray.shape[0] * gray.shape[1]
-        area_ratio = max_area / img_area
-
-        st.write(f"Area Ratio: {area_ratio:.3f} | Jumlah Kontur Valid: {len(valid_contours)}")
-
-        if area_ratio > 0.20 and len(valid_contours) == 1:
-            st.write("🔍 Terdeteksi sebagai **Single Grain**")
-
-            x, y, w, h = cv2.boundingRect(max_contour)
-            cropped = gray[y:y+h, x:x+w]
-
-            # Resize dan konversi ke RGB (setelah cropping)
-            resized = cv2.resize(cropped, (224, 224))
-            rgb_img = cv2.cvtColor(resized, cv2.COLOR_GRAY2RGB)
-            rgb_img = rgb_img / 255.0
-            rgb_img = np.expand_dims(rgb_img, axis=0)
-
-            prediction = model.predict(rgb_img)
-            class_idx = np.argmax(prediction)
-            class_label = class_names[class_idx]
-            confidence = prediction[0][class_idx]
-
-            st.image(cropped, caption="Cropped Grain (Grayscale)", use_column_width=True)
-            st.success(f"Predicted Class: {class_label} ({confidence:.2%})")
-
-        else:
-            st.write("🔍 Terdeteksi sebagai **Multiple Grain**")
-
-            img_rgb = cv2.cvtColor(gray, cv2.COLOR_GRAY2RGB)
-
-            for cnt in valid_contours:
-                x, y, w, h = cv2.boundingRect(cnt)
-                roi = gray[y:y+h, x:x+w]
-
-                resized = cv2.resize(roi, (224, 224))
-                rgb_roi = cv2.cvtColor(resized, cv2.COLOR_GRAY2RGB)
-                rgb_roi = rgb_roi / 255.0
-                rgb_roi = np.expand_dims(rgb_roi, axis=0)
-
-                prediction = model.predict(rgb_roi)
-                class_idx = np.argmax(prediction)
-                class_label = class_names[class_idx]
-                confidence = prediction[0][class_idx]
-
-                # Gambar kotak dan label
-                cv2.rectangle(img_rgb, (x, y), (x+w, y+h), (0, 255, 0), 2)
-                cv2.putText(img_rgb, f"{class_label} ({confidence:.2%})", (x, y-10),
-                cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 1)
-
-            st.image(img_rgb, caption="Deteksi Multiple Grain", use_column_width=True)
 
 def About_us():
     st.header("Klasifikasi Varietas Beras Menggunakan Transfer Learning dengan Arsitektur DenseNet-201")
