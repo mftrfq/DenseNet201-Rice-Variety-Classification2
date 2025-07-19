@@ -281,7 +281,7 @@ def Model_Training():
     st.markdown("# Model Training")
     st.divider()
     st.write("""
-        Model dilatih menggunakan arsitektur **DenseNet201** dengan pendekatan Transfer Learning yang memanfaatkan pre-trained weight dari ImageNet.
+        Model dilatih menggunakan arsitektur **DenseNet-201** dengan pendekatan Transfer Learning yang memanfaatkan pre-trained weight dari ImageNet.
         Hyperparameter yang digunakan:
         - Optimizer: Adam
         - Learning rate: 0.001
