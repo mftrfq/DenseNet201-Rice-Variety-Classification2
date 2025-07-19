@@ -489,7 +489,7 @@ def Prediction():
                                     fontScale=1.2, color=color, thickness=2)
                         variety_counter[label] += 1
 
-                    st.image(cv2.cvtColor(draw_img, cv2.COLOR_BGR2RGB), caption="Hasil Klasifikasi", use_container_width=True)
+                    st.image(cv2.cvtColor(draw_img, cv2.COLOR_BGR2RGB), caption="Hasil Prediksi", use_container_width=True)
                     st.header("🔎 RINGKASAN")
                     st.markdown(f"Jumlah beras teridentifikasi: {sum(variety_counter.values())}")
                     for variety, total in variety_counter.items():
