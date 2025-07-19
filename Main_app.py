@@ -502,7 +502,7 @@ def Prediction():
                     for i in range(1, num_labels):
                         x, y, w, h, area = stats[i]
                         cx, cy = centroids[i]
-                        if area < 300:
+                        if area < 500:
                             continue
 
                         side = int(max(w, h) * 1.5)
