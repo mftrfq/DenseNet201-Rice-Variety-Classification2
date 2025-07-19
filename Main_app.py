@@ -50,6 +50,7 @@ def import_and_predict(image_data, model):
 # ====== Halaman-Halaman ======
 def Introduction():
     st.title("KLASIFIKASI VARIETAS BERAS MENGGUNAKAN TRANSFER LEARNING DENGAN ARSITEKTUR DENSENET-201")
+    st.divider()
     st.header("Latar Belakang")
     st.write("""
              Beras merupakan komoditas pangan utama dan sumber karbohidrat penting bagi masyarakat Indonesia. 
@@ -59,7 +60,7 @@ def Introduction():
              Untuk mengatasinya, teknologi berbasis kecerdasan buatan (AI) dapat menjadi solusi yang menjanjikan. 
              Identifikasi otomatis dengan AI dapat meningkatkan akurasi, efisiensi, dan keandalan klasifikasi varietas beras, serta mendukung pengelolaan dan distribusi yang lebih baik.
     """)
-    st.divider()
+    # st.divider()
     
     st.header("Rumusan Masalah")
     st.markdown("#### - Permasalahan")
@@ -79,7 +80,7 @@ def Introduction():
     st.write("""
             Bagaimana tingkat Accuracy, Precision, Recall, dan F1-Score dari model DenseNet-201 berbasis Transfer Learning dibandingkan dengan Non-Transfer Learning dalam mengklasifikasikan varietas beras?
     """)
-    st.divider()
+    # st.divider()
 
     st.header("Tujuan dan Manfaat Penelitian") 
     st.markdown("#### - Tujuan Penelitian")
@@ -92,7 +93,7 @@ def Introduction():
             dan menghasilkan sistem klasifikasi yang akurat untuk mengidentifikasi varietas beras yang dapat digunakan sebagai solusi inovatif untuk mengatasi keterbatasan metode manual 
             serta dapat digunakan sebagai bahan rujukan untuk penelitian terkait selanjutnya
     """)
-    st.divider()
+    # st.divider()
 
     st.header("Batasan Masalah")
     st.write("""
@@ -101,7 +102,7 @@ def Introduction():
             3.	Penelitian ini difokuskan pada klasifikasi varietas beras berdasarkan citra digital biji beras.
             4.	Algoritma yang digunakan dalam penelitian ini adalah pre-trained model DenseNet-201.
     """)
-    st.divider()
+    # st.divider()
        
     st.header("Metodologi")
     left_co, cent_co,last_co = st.columns(3)
