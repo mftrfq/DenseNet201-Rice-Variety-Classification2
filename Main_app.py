@@ -449,18 +449,6 @@ def Prediction():
                     if area >= 300:
                         object_count += 1
 
-                # if object_count <= 1:
-                #     predictions = import_and_predict(image, model)
-                # if object_count <= 1:
-                #     output_bytes = remove(file_bytes)
-                #     img_no_bg = Image.open(BytesIO(output_bytes)).convert("RGB")
-                #     predictions = import_and_predict(img_no_bg, model)
-                #     confidence = np.max(predictions) * 100
-                #     pred_class = class_names[np.argmax(predictions)]
-                
-                #     st.header("🔎 HASIL")
-                #     st.warning(f"Varietas: {pred_class.upper()}")
-                #     st.info(f"Confidence: {confidence:.2f}%")
                 if object_count <= 1:
                     output_bytes = remove(file_bytes)
                     img_no_bg = Image.open(BytesIO(output_bytes)).convert("RGB")
@@ -489,14 +477,12 @@ def Prediction():
                         confidence = np.max(score) * 100
         
                         st.header("🔎 HASIL")
-                        st.image(crop_rgb, caption="Gambar setelah rembg + grayscale + crop", use_container_width=True)
                         st.warning(f"Varietas: {label.upper()}")
                         st.info(f"Confidence: {confidence:.2f}%")
                     else:
                         st.error("Objek tidak terdeteksi setelah proses cropping.")
 
                 else:
-                    # st.info(f"Terdeteksi {object_count} butir beras (multiple grain)")
                     st.info("HASIL PREDIKSI")
                     draw_img = cv2.cvtColor(np.array(image), cv2.COLOR_RGB2BGR)
                     variety_counter = Counter()
