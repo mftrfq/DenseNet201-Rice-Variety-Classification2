@@ -128,6 +128,18 @@ def Dataset_Information():
     with col3:
         st.image("Images/Mentik.jpg", caption="Varietas Mentik Susu", use_container_width=True)
 
+    data = {
+            "Varietas": ["Ciherang", "IR64", "Mentik Susu", "Total"],
+            "Jumlah Data": [2000, 2000, 2000, 6000],
+            "Training Set": [1600, 1600, 1600, 4800],
+            "Validation Set": [200, 200, 200, 600],
+            "Testing Set": [200, 200, 200, 600]
+    }
+    
+    df = pd.DataFrame(data)
+    st.title("Distribusi Dataset Varietas Padi")
+    st.table(df)
+
 def Preprocessing():
     st.markdown("# Preprocessing")
     st.divider()
