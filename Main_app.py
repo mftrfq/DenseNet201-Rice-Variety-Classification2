@@ -740,7 +740,7 @@ def predict_multiple(image):
     return img_box, results
 
 def Prediction():
-    st.title("Prediksi Varietas Beras (Single & Multiple)")
+    st.title("Prediction")
     uploaded_file = st.file_uploader("Upload gambar beras", type=["jpg", "jpeg", "png"])
 
     if uploaded_file is not None:
