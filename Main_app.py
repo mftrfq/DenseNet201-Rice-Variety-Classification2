@@ -137,7 +137,7 @@ def Dataset_Information():
     }
     
     df = pd.DataFrame(data)
-    st.title("Distribusi Dataset Varietas Padi")
+    st.markdown("#### Distribusi Dataset Varietas Padi")
     st.table(df)
 
 def Preprocessing():
