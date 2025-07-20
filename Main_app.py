@@ -151,24 +151,26 @@ def Preprocessing():
     st.divider()
     st.subheader("1. Background Removing")
     st.write("""
-            Penghapusan latar belakang dilakukan menggunakan library rembg yang memanfaatkan pre-trained model U2-Net. 
+            Background removing dilakukan dengan menggunakan library rembg yang memanfaatkan arsitektur U2-Net untuk memisahkan objek utama dari latar belakang secara otomatis 
+            tanpa memerlukan pelatihan tambahan. Penghapusan latar belakang ini dilakukan supaya objek utama dalam gambar dapat lebih menonjol dan bebas dari gangguan visual, 
+            sehingga diharapkan dapat meningkatkan akurasi dan efisiensi dalam pengolahan citra 
     """)
-    st.markdown("#### Arsitektur U2-Net")
-    u2net1 = Image.open("Images/u2netarch.png").resize((600, 400))
-    u2net2 = Image.open("Images/RSU.png").resize((600, 400))
-    st.write("""
-            Cara kerjanya adalah: 
-            1. **Input RGB**  
-            2. **Two-Level U-Structure** (Encoder & Decoder)  
-            3. **Probability Maps**  
-            4. **Fusion & Thresholding**  
-            5. **Output Masking (RGBA)**
-    """)
-    col1, col2 = st.columns(2)
-    with col1:
-        st.image(u2net1, caption="Arsitektur U2-Net", use_container_width=True)
-    with col2:
-        st.image(u2net2, caption="Komponen Decoder-Encoder", use_container_width=True)
+    # st.markdown("#### Arsitektur U2-Net")
+    # u2net1 = Image.open("Images/u2netarch.png").resize((600, 400))
+    # u2net2 = Image.open("Images/RSU.png").resize((600, 400))
+    # st.write("""
+    #         Cara kerjanya adalah: 
+    #         1. **Input RGB**  
+    #         2. **Two-Level U-Structure** (Encoder & Decoder)  
+    #         3. **Probability Maps**  
+    #         4. **Fusion & Thresholding**  
+    #         5. **Output Masking (RGBA)**
+    # """)
+    # col1, col2 = st.columns(2)
+    # with col1:
+    #     st.image(u2net1, caption="Arsitektur U2-Net", use_container_width=True)
+    # with col2:
+    #     st.image(u2net2, caption="Komponen Decoder-Encoder", use_container_width=True)
     
     rembg1 = Image.open("Images/ciherang_rembg.png").resize((400, 400))
     rembg2 = Image.open("Images/ir64_rembg.png").resize((400, 400))
