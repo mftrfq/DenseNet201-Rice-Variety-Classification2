@@ -53,12 +53,18 @@ def Introduction():
     st.divider()
     st.header("Latar Belakang")
     st.write("""
-             Beras merupakan komoditas pangan utama dan sumber karbohidrat penting bagi masyarakat Indonesia. 
-             Konsumsinya terus meningkat dan mencapai 30,34 juta ton pada tahun 2024, menjadikannya sangat vital bagi ketahanan pangan nasional. 
-             Namun, terdapat tantangan seperti pemalsuan atau pencampuran varietas beras dapat mengganggu stabilitas pasar dan menurunkan kepercayaan konsumen.
-             Sementara itu, metode identifikasi manual berbasis visual sering kali memakan waktu, membutuhkan keahlian khusus, dan rawan kesalahan. 
-             Untuk mengatasinya, teknologi berbasis kecerdasan buatan (AI) dapat menjadi solusi yang menjanjikan. 
-             Identifikasi otomatis dengan AI dapat meningkatkan akurasi, efisiensi, dan keandalan klasifikasi varietas beras, serta mendukung pengelolaan dan distribusi yang lebih baik.
+             Beras merupakan komoditas pangan utama sekaligus sumber karbohidrat pokok bagi masyarakat Indonesia. Tingkat konsumsinya terus mengalami peningkatan 
+             dan diperkirakan mencapai 30,34 juta ton pada tahun 2024. Hal ini menjadikan beras sebagai elemen yang sangat krusial dalam menjaga ketahanan pangan nasional.
+    """)
+    st.write("""
+             Namun, peredaran beras di pasar tidak lepas dari tantangan, salah satunya adalah praktik pemalsuan atau pencampuran varietas yang dapat mengganggu stabilitas harga 
+             dan menurunkan kepercayaan konsumen. Di sisi lain, proses identifikasi varietas secara manual—yang mengandalkan pengamatan visual—memiliki keterbatasan, 
+             seperti membutuhkan waktu lama, memerlukan keahlian khusus, serta rentan terhadap kesalahan. 
+    """)
+    st.write("""
+             Dengan memanfaatkan teknologi berbasis kecerdasan buatan (Artificial Intelligence/AI), 
+             proses identifikasi varietas beras dapat dilakukan dengan pendekatan yang lebih akurat, cepat, dan efisien dibandingkan metode konvensional. 
+             Teknologi ini mampu mengolah data visual secara otomatis dan konsisten, sehingga mengurangi potensi kesalahan maupun hambatan yang biasa terjadi pada identifikasi manual.
     """)
     # st.divider()
     
