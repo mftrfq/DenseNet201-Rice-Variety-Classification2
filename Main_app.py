@@ -58,7 +58,7 @@ def Introduction():
     """)
     st.write("""
              Namun, peredaran beras di pasar tidak lepas dari tantangan, salah satunya adalah praktik pemalsuan atau pencampuran varietas yang dapat mengganggu stabilitas harga 
-             dan menurunkan kepercayaan konsumen. Di sisi lain, proses identifikasi varietas secara manual—yang mengandalkan pengamatan visual—memiliki keterbatasan, 
+             dan menurunkan kepercayaan konsumen. Di sisi lain, proses identifikasi varietas secara manual yang mengandalkan pengamatan visual seringkali mengalami hambatan dan keterbatasan
              seperti membutuhkan waktu lama, memerlukan keahlian khusus, serta rentan terhadap kesalahan. 
     """)
     st.write("""
