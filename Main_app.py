@@ -599,9 +599,9 @@ def Prediction():
         st.markdown("#### Pilih Salah Satu Sampel")
 
         sample_display = {
-            "Ciherang": r'Images/sampel ciherang_1.png',
-            "IR64": r'Images/sampel ir64_1.png',
-            "Mentik": r'Images/sampel mentik_1.png',
+            "Ciherang": r'Images/ciherang.jpg',
+            "IR64": r'Images/ir64.jpg',
+            "Mentik": r'Images/mentik.png',
             "Kumpulan": r'Images/multiple grain.jpg'
         }
 
