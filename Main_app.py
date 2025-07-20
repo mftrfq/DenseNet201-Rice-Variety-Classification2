@@ -62,7 +62,7 @@ def Introduction():
              seperti membutuhkan waktu lama, memerlukan keahlian khusus, serta rentan terhadap kesalahan. 
     """)
     st.write("""
-             Dengan memanfaatkan teknologi berbasis kecerdasan buatan (Artificial Intelligence/AI), 
+             Dengan memanfaatkan teknologi berbasis kecerdasan buatan (AI), 
              proses identifikasi varietas beras dapat dilakukan dengan pendekatan yang lebih akurat, cepat, dan efisien dibandingkan metode konvensional. 
              Teknologi ini mampu mengolah data visual secara otomatis dan konsisten, sehingga mengurangi potensi kesalahan maupun hambatan yang biasa terjadi pada identifikasi manual.
     """)
