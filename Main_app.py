@@ -388,132 +388,6 @@ def Model_Evaluation():
     df = pd.DataFrame(data)
     st.table(df)
 
-# def Prediction():
-#     st.header("Prediction")
-#     st.divider()
-#     with st.sidebar:
-#         st.sidebar.header("Select Image Source")
-#         img_source = st.radio("Image Source", ["Upload image", "Sample image"])
-
-#     if img_source == "Sample image":
-#         st.markdown("#### Pilih Salah Satu Sampel")
-    
-#         sample_display = {
-#             "Ciherang": r'Images/sampel ciherang_1.png',
-#             "IR64": r'Images/sampel ir64_1.png',
-#             "Mentik": r'Images/sampel mentik_1.png',
-#             "Kumpulan Beras": r'Images/multiple grain.jpg'
-#         }
-    
-#         selected_image = None
-#         cols = st.columns(len(sample_display))
-#         for i, (varietas, path) in enumerate(sample_display.items()):
-#             with cols[i]:
-#                 image = Image.open(path)
-#                 st.image(image, caption=varietas, use_container_width=True)
-#                 if st.button(f"Pilih {varietas}", key=path):
-#                     selected_image = path
-    
-#         if selected_image:
-#             image = Image.open(selected_image).convert('RGB')
-#             st.image(image, caption="Gambar Sampel Dipilih", use_container_width=True)
-#             predictions = import_and_predict(image, model)
-#             confidence = np.max(predictions) * 100
-#             pred_class = class_names[np.argmax(predictions)]
-#             st.header("🔎 HASIL")
-#             st.warning(f"Varietas: {pred_class.upper()}")
-#             st.info(f"Confidence: {confidence:.2f}%")
-#         else:
-#             st.info("Pilih salah satu sampel untuk prediksi")
-
-
-#     else:
-#         file = st.file_uploader("Upload gambar...", type=["jpg", "png", "jpeg"])
-#         if file is None:
-#             st.info("Silakan upload gambar beras")
-#         else:
-#             try:
-#                 file_bytes = file.read()
-#                 image = Image.open(BytesIO(file_bytes)).convert('RGB')
-#                 st.image(image, caption="Gambar yang diunggah", use_container_width=True)
-    
-#                 output_bytes = remove(file_bytes)
-#                 img_no_bg = Image.open(BytesIO(output_bytes)).convert("RGB")
-#                 img_np = np.array(img_no_bg)
-    
-#                 gray = cv2.cvtColor(img_np, cv2.COLOR_RGB2GRAY)
-#                 _, binary = cv2.threshold(gray, 0, 255, cv2.THRESH_BINARY + cv2.THRESH_OTSU)
-#                 num_labels, labels, stats, centroids = cv2.connectedComponentsWithStats(binary, connectivity=8)
-                
-#                 object_count = sum(1 for i in range(1, num_labels) if stats[i, cv2.CC_STAT_AREA] >= 300)
-#                 if object_count <= 1:
-#                     contours, _ = cv2.findContours(binary, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
-#                     if contours:
-#                         x, y, w, h = cv2.boundingRect(contours[0])
-#                         side = int(max(w, h) * 1.5)
-#                         cx, cy = x + w // 2, y + h // 2
-#                         x1 = max(0, cx - side // 2)
-#                         y1 = max(0, cy - side // 2)
-#                         x2 = min(img_np.shape[1], x1 + side)
-#                         y2 = min(img_np.shape[0], y1 + side)
-#                         crop = img_np[y1:y2, x1:x2]
-                        
-#                         crop_gray = cv2.cvtColor(crop, cv2.COLOR_RGB2GRAY)
-#                         crop_rgb = cv2.cvtColor(crop_gray, cv2.COLOR_GRAY2RGB)
-#                         resized = cv2.resize(crop_rgb, (224, 224))
-#                         x_input = tf.expand_dims(resized / 255.0, axis=0)
-    
-#                         pred = model.predict(x_input, verbose=0)
-#                         score = tf.nn.softmax(pred[0])
-#                         label = class_names[np.argmax(score)]
-#                         confidence = np.max(score) * 100
-    
-#                         st.header("🔎 HASIL")
-#                         st.warning(f"Varietas: {label.upper()}")
-#                         st.info(f"Confidence: {confidence:.2f}%")
-#                     else:
-#                         st.error("Objek tidak terdeteksi setelah proses cropping.")
-    
-#                 else:
-#                         st.info("HASIL PREDIKSI")
-#                         draw_img = cv2.cvtColor(np.array(image), cv2.COLOR_RGB2BGR)
-#                         variety_counter = Counter()
-    
-#                         for i in range(1, num_labels):
-#                             x, y, w, h, area = stats[i]
-#                             cx, cy = centroids[i]
-#                             if area < 500:
-#                                 continue
-    
-#                             side = int(max(w, h) * 1.5)
-#                             cx_int, cy_int = int(cx), int(cy)
-#                             x1 = max(0, cx_int - side // 2)
-#                             y1 = max(0, cy_int - side // 2)
-#                             side = min(side, min(img_np.shape[1] - x1, img_np.shape[0] - y1))
-    
-#                             crop = img_np[y1:y1 + side, x1:x1 + side]
-#                             resized = cv2.resize(crop, (224, 224))
-#                             x_input = tf.expand_dims(resized / 255.0, axis=0)
-    
-#                             pred = model.predict(x_input, verbose=0)
-#                             score = tf.nn.softmax(pred[0])
-#                             label = class_names[np.argmax(score)]
-#                             color = label_colors.get(label, (0, 255, 255))
-    
-#                             cv2.rectangle(draw_img, (x1, y1), (x1 + side, y1 + side), color, 2)
-#                             cv2.putText(draw_img, label, (x1, y1 - 10), cv2.FONT_HERSHEY_SIMPLEX,
-#                                         fontScale=1.2, color=color, thickness=2)
-#                             variety_counter[label] += 1
-    
-#                         st.image(cv2.cvtColor(draw_img, cv2.COLOR_BGR2RGB), caption="Hasil Prediksi", use_container_width=True)
-#                         st.header("🔎 RINGKASAN")
-#                         st.markdown(f"Jumlah beras teridentifikasi: {sum(variety_counter.values())}")
-#                         for variety, total in variety_counter.items():
-#                             st.markdown(f"{variety.upper()}: {total} biji")
-                            
-#             except Exception as e:
-#                 st.error(f"Terjadi kesalahan: {str(e)}")
-
 def Prediction():
     st.header("Prediction")
     st.divider()
@@ -638,16 +512,16 @@ def Prediction():
                 st.error(f"Terjadi kesalahan: {str(e)}")
 
 
-def About_us():
-    st.header("Klasifikasi Varietas Beras Menggunakan Transfer Learning dengan Arsitektur DenseNet-201")
-    st.markdown("#### Peneliti:")
-    st.markdown("""
-                1. Moch. Miftachur Rifqi Al Husain
-                2. Kurniawan Eka Permana, S.Kom., M.Sc.
-                3. Andharini Dwi Cahyani, S.Kom., M.Kom., Ph.D.
-    """)
-    st.markdown("#### Institusi: Universitas Trunojoyo Madura")
-    st.markdown("#### Tahun Penelitian: 2025")
+# def About_us():
+#     st.header("Klasifikasi Varietas Beras Menggunakan Transfer Learning dengan Arsitektur DenseNet-201")
+#     st.markdown("#### Peneliti:")
+#     st.markdown("""
+#                 1. Moch. Miftachur Rifqi Al Husain
+#                 2. Kurniawan Eka Permana, S.Kom., M.Sc.
+#                 3. Andharini Dwi Cahyani, S.Kom., M.Kom., Ph.D.
+#     """)
+#     st.markdown("#### Institusi: Universitas Trunojoyo Madura")
+#     st.markdown("#### Tahun Penelitian: 2025")
     
 with st.sidebar:
     selected = option_menu(
@@ -659,7 +533,7 @@ with st.sidebar:
             "Model Training", 
             "Model Evaluation", 
             "Prediction",
-            "About Us"
+            # "About Us"
         ],
         icons=["info-circle", "bar-chart", "tools", "cpu", "clipboard-check", "search", "balloon-heart"], menu_icon="list", default_index=0,
     )
@@ -671,7 +545,7 @@ page_names_to_funcs = {
     "Model Training": Model_Training,
     "Model Evaluation": Model_Evaluation,
     "Prediction": Prediction,
-    "About Us": About_us
+    # "About Us": About_us
 }
 
 page_names_to_funcs[selected]()
