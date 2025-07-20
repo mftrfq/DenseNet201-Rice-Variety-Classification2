@@ -514,16 +514,23 @@ def Prediction():
                 st.error(f"Terjadi kesalahan: {str(e)}")
 
 
-# def About_us():
-#     st.header("Klasifikasi Varietas Beras Menggunakan Transfer Learning dengan Arsitektur DenseNet-201")
-#     st.markdown("#### Peneliti:")
-#     st.markdown("""
-#                 1. Moch. Miftachur Rifqi Al Husain
-#                 2. Kurniawan Eka Permana, S.Kom., M.Sc.
-#                 3. Andharini Dwi Cahyani, S.Kom., M.Kom., Ph.D.
-#     """)
-#     st.markdown("#### Institusi: Universitas Trunojoyo Madura")
-#     st.markdown("#### Tahun Penelitian: 2025")
+def About_us():
+    st.header("Klasifikasi Varietas Beras Menggunakan Transfer Learning dengan Arsitektur DenseNet-201")
+    st.markdown("""
+    ### Peneliti :
+    
+    - **Nama** : Moch. Miftachur Rifqi Al Husain 
+    - **NIM** : 210411100125
+    - **Program Studi** : Teknik Informatika  
+    - **Institusi** : Universitas Trunojoyo Madura  
+    - **Dosen Pembimbing** :
+        - Dosen Pembimbing 1 : Kurniawan Eka Permana, S.Kom., M.Sc 
+        - Dosen Pembimbing 2 : Andharini Dwi Cahyani, S.Kom., M.Kom., Ph.D.
+    - **Dosen Penguji** :
+        - Dosen Penguji 1 : Dr. Indah Agustien Siradjuddin, S.Kom., M.Kom.
+        - Dosen Penguji 2 : Dr. Arik Kurniawati, S.Kom., M.T.
+        - Dosen Penguji 3 : Fifin Ayu Mufarroha, S.Kom., M.Kom.
+    """)
     
 with st.sidebar:
     selected = option_menu(
@@ -535,7 +542,7 @@ with st.sidebar:
             "Model Training", 
             "Model Evaluation", 
             "Prediction",
-            # "About Us"
+            "About Us"
         ],
         icons=["info-circle", "bar-chart", "tools", "cpu", "clipboard-check", "search", "balloon-heart"], menu_icon="list", default_index=0,
     )
@@ -547,7 +554,7 @@ page_names_to_funcs = {
     "Model Training": Model_Training,
     "Model Evaluation": Model_Evaluation,
     "Prediction": Prediction,
-    # "About Us": About_us
+    "About Us": About_us
 }
 
 page_names_to_funcs[selected]()
