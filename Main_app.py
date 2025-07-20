@@ -186,15 +186,20 @@ def Preprocessing():
     st.divider()
 
     st.subheader("2. Grayscale Conversion")
+    # st.write("""
+    #         Grayscale Conversion dilakukan dengan mengambil nilai intensitas warna dari setiap pixel dalam gambar RGB 
+    #         dan menghitung nilai abu-abu menggunakan weighted sum dari nilai merah (R), hijau (G), dan biru (B).
+    # """)
+    # st.latex(r"""
+    #          gray = 0.299R + 0.587G + 0.114B 
+    # """)
+    # st.write("""
+    #         Setelah nilai intensitas abu-abu dihitung, setiap pixel dalam gambar asli (yang berisi tiga nilai R, G, dan B) digantikan oleh satu nilai gray
+    # """)
     st.write("""
-            Grayscale Conversion dilakukan dengan mengambil nilai intensitas warna dari setiap pixel dalam gambar RGB 
-            dan menghitung nilai abu-abu menggunakan weighted sum dari nilai merah (R), hijau (G), dan biru (B).
-    """)
-    st.latex(r"""
-             gray = 0.299R + 0.587G + 0.114B 
-    """)
-    st.write("""
-            Setelah nilai intensitas abu-abu dihitung, setiap pixel dalam gambar asli (yang berisi tiga nilai R, G, dan B) digantikan oleh satu nilai gray
+            Grayscale Conversion dilakukan untuk mengubah citra berwarna (RGB) menjadi citra skala abu-abu, di mana setiap piksel hanya mengandung informasi 
+            intensitas cahaya tanpa informasi warna. Proses ini bertujuan untuk menyederhanakan data visual yang akan diproses oleh model, mengurangi kompleksitas komputasi, 
+            serta menghilangkan informasi warna yang tidak relevan.
     """)
     gray1 = Image.open("Images/ciherang_gray.png").resize((400, 400))
     gray2 = Image.open("Images/ir64_gray.png").resize((400, 400))
