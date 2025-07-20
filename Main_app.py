@@ -110,7 +110,7 @@ def Introduction():
     # """)
     # # st.divider()
        
-    st.header("Metodologi")
+    st.header("Metodologi Penelitian")
     left_co, cent_co,last_co = st.columns(3)
     with cent_co:
         st.image("Images/systemarch.png", caption="Arsitektur sistem")
