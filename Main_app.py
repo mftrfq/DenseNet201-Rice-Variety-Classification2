@@ -601,7 +601,7 @@ def Prediction():
         sample_display = {
             "Ciherang": r'Images/ciherang.jpg',
             "IR64": r'Images/ir64.jpg',
-            "Mentik": r'Images/mentik.png',
+            "Mentik": r'Images/mentik.jpg',
             "Kumpulan": r'Images/multiple grain.jpg'
         }
 
