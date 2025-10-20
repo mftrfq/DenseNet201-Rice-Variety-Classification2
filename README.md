@@ -11,15 +11,11 @@ Although the related manuscript could not be successfully published due to an ov
 ---
 🧩 Key Features
 
-Transfer Learning with DenseNet-201 fine-tuned for rice variety classification
-
-Comprehensive Benchmarking with ResNet50, VGG16, MobileNetV2, and EfficientNetB3
-
-Data Augmentation using rotation, brightness variation, and flips for improved generalization
-
-Evaluation Metrics: Accuracy, Precision, Recall, F1-score, Confusion Matrix, and ROC Analysis
-
-Open-Set Recognition Experiments to handle unknown rice varieties
+- Transfer Learning with DenseNet-201 fine-tuned for rice variety classification
+- Comprehensive Benchmarking with ResNet50, VGG16, MobileNetV2, and EfficientNetB3
+- Data Augmentation using rotation, brightness variation, and flips for improved generalization
+- Evaluation Metrics: Accuracy, Precision, Recall, F1-score, and Confusion Matrix
+- Open-Set Recognition Experiments to handle unknown rice varieties
 
 ---
 📊 Dataset
